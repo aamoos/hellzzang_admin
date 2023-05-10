@@ -2,19 +2,18 @@
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<!-- config -->
-<th:block th:replace="fragment/config :: configFragment"></th:block>
-<!-- header -->
+<head>
+    <th:block th:replace="fragment/config :: configFragment"></th:block>
+</head>
+
 <body>
-<th:block th:replace="fragment/header :: headerFragment"></th:block>
-<div class="container py-3">
-    <div>
+    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+         data-sidebar-position="fixed" data-header-position="fixed">
+        <!-- side bar -->
+        <th:block th:replace="fragment/sidebar :: sideFragment"></th:block>
+
         <!-- content -->
         <th:block layout:fragment="content"></th:block>
     </div>
-</div>
-
-<!-- footer -->
-<th:block th:replace="fragment/footer :: footerFragment"></th:block>
 </body>
 </html>

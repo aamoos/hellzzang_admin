@@ -30,7 +30,7 @@ public class UserDetailService implements UserDetailsService {
 
         AdminUsers adminUserInfo = userRepository.findByUserid(userId);
 
-        return (UserDetails) adminUserInfo;
+        return adminUserInfo;
     }
 
 

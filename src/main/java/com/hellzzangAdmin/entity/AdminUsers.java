@@ -79,4 +79,15 @@ public class AdminUsers implements UserDetails {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         return authorities;
     }
+
+    /**
+    * @methodName : delete
+    * @date : 2023-05-15 오전 10:50
+    * @author : 김재성
+    * @Description: 관리자 삭제
+    **/
+    public AdminUsers delete(){
+        this.delYn = "Y";
+        return this;
+    }
 }

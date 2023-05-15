@@ -6,6 +6,14 @@
 <th:block layout:fragment="content">
         <!--  Header End -->
         <div class="container-fluid">
+            <input type="hidden" id="number" th:value="${number}" />
+            <input type="hidden" id="size" th:value="${size}" />
+
+            <div class="input-group mb-3">
+                <input type="text" id="searchVal" class="form-control" placeholder="검색어를 입력해주세요" aria-label="Recipient's username" aria-describedby="button-addon2" th:value="${searchVal}">
+                <button class="btn btn-outline-secondary" type="button" id="button-addon2" th:onclick="adminUserList()">검색</button>
+            </div>
+
             <div class="row">
                 <div class="col-lg-12 d-flex align-items-stretch">
                     <div class="card w-100">
@@ -31,6 +39,9 @@
                                     </tr>
                                     </thead>
                                     <tbody>
+                                        <tr th:if="${totalCount == 0}">
+                                            <td colspan="6" style="text-align:center">조회된 리스트가 없습니다.</td>
+                                        </tr>
                                         <tr th:each="list, userStat : ${list}">
 
                                             <td class="border-bottom-0">
@@ -51,7 +62,7 @@
                                             <td class="border-bottom-0">
                                                 <button type="button" class="btn btn-info m-1" th:onclick="|location.href='@{/manage/adminUser/update/{id}(id=${list.id})}'|">수정</button>
 
-                                                <button type="button" class="btn btn-danger m-1">삭제</button>
+                                                <button type="button" class="btn btn-danger m-1" th:attr="data-id=${list.id}" th:onclick="adminUserUpdate(this)">삭제</button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -61,10 +72,83 @@
                     </div>
                 </div>
             </div>
+
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <button onclick="location.href='/manage/adminUser/write'" type="button" class="btn btn-outline-primary m-1">관리자 등록</button>
             </div>
         </div>
-        </div>
+        <nav class="container d-flex align-items-center justify-content-center" aria-label="Page navigation example"
+             th:with="start=${(list.number/maxPage)*maxPage + 1},
+                          end=(${(list.totalPages == 0) ? 1 : (start + (maxPage - 1) < list.totalPages ? start + (maxPage - 1) : list.totalPages)})">
+            <ul class="pagination">
+
+                <li th:if="${start > 1}" class="page-item">
+                    <a th:href="@{/manage/adminUser/list?(page=0, searchVal=${searchVal})}" class="page-link" href="#"
+                       aria-label="Previous">
+                        <span aria-hidden="true">&laquo;&laquo;</span>
+                    </a>
+                </li>
+
+                <li th:if="${start > 1}" class="page-item">
+                    <a th:href="@{/manage/adminUser/list?(page=${start - maxPage-1}, searchVal=${searchVal})}" class="page-link" href="#"
+                       aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+
+                <li th:each="page: ${#numbers.sequence(start, end)}" class="page-item"
+                    th:classappend="${list.number+1 == page} ? active">
+                    <a th:href="@{/manage/adminUser/list?(page=${page-1}, searchVal=${searchVal})}" th:text="${page}" class="page-link"
+                       href="#">1</a>
+                </li>
+
+                <li th:if="${end < list.totalPages}" class="page-item">
+                    <a th:href="@{/manage/adminUser/list?(page=${start + maxPage -1}, searchVal=${searchVal})}" class="page-link"
+                       href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+
+                <li th:if="${end < list.totalPages}" class="page-item">
+                    <a th:href="@{/manage/adminUser/list?(page=${list.totalPages-1}, searchVal=${searchVal})}" class="page-link" href="#"
+                       aria-label="Next">
+                        <span aria-hidden="true">&raquo;&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
 </th:block>
 </html>
+
+<script>
+
+    //관리자 리스트 조회
+    function adminUserList(){
+        let number = document.querySelector('#number').value;
+        let searchVal = document.querySelector('#searchVal').value;
+        let size = document.querySelector('#size').value;
+
+        location.href = "/manage/adminUser/list?number="+number+"&searchVal="+searchVal+"&size="+size;
+    }
+
+    //삭제 버튼클릭
+    function adminUserUpdate(target) {
+        console.log(target.getAttribute('data-id'))
+        if (confirm("정말로 삭제하시겠습니까?")) {
+            const form = document.createElement('form');
+            form.setAttribute('method', 'post');        //Post 메소드 적용
+            form.setAttribute('action', '/manage/adminUser/delete');
+
+            let input1 = document.createElement('input');
+            input1.setAttribute("type", "hidden");
+            input1.setAttribute("name", "id");
+            input1.setAttribute("value", target.getAttribute('data-id'));
+
+            form.appendChild(input1);
+            console.log(form);
+            document.body.appendChild(form);
+            form.submit();
+        }
+
+    }
+</script>

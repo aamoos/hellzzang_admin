@@ -10,14 +10,13 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.Column;
 import javax.validation.Valid;
@@ -109,7 +108,7 @@ public class ManageController {
      * @Description: 관리자 등록 리스트
      **/
     @GetMapping("/adminUser/list")
-    public String adminUser(String searchVal, Pageable pageable, Model model){
+    public String adminUser(String searchVal, @PageableDefault Pageable pageable, Model model){
         Page<AdminUsersDto> results = adminUserService.selectAdminUserList(searchVal, pageable);
 
         model.addAttribute("list", results);
@@ -176,9 +175,9 @@ public class ManageController {
         }
 
         //아이디 중복체크
-        AdminUsers adminUsers = adminUserRepository.findByUserid(saveAdminUser.getUsername());
+        AdminUsers adminUsers = adminUserRepository.findByUserid(saveAdminUser.getUserid());
 
-        if(adminUsers == null){
+        if(adminUsers != null){
             result.rejectValue("userid", "Eqauls.userid", "아이디가 중복되었습니다.");
             return "views/manage/adminUser/adminUser-write";
         }
@@ -206,6 +205,19 @@ public class ManageController {
         //저장
         adminUserService.save(saveAdminUser);
 
+        // 검증 통과 시, 사용자 등록 로직 수행
+        return "redirect:/manage/adminUser/list";
+    }
+
+    /**
+    * @methodName : adminUserDelete
+    * @date : 2023-05-15 오전 10:46
+    * @author : 김재성
+    * @Description: 관리자 삭제
+    **/
+    @PostMapping("/adminUser/delete")
+    public String adminUserDelete(@RequestParam Long id) {
+        adminUserService.delete(id);
         // 검증 통과 시, 사용자 등록 로직 수행
         return "redirect:/manage/adminUser/list";
     }

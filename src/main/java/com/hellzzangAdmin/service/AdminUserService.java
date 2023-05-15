@@ -62,6 +62,19 @@ public class AdminUserService {
     }
 
     /**
+    * @methodName : delete
+    * @date : 2023-05-15 오전 10:52
+    * @author : 김재성
+    * @Description: 관리자 삭제
+    **/
+    @Transactional
+    public Long delete(Long id){
+        AdminUsers adminUsers = adminUserRepository.findById(id).get();
+        adminUsers.delete();
+        return adminUsers.getId();
+    }
+
+    /**
     * @methodName : selectAdminUserList
     * @date : 2023-05-12 오후 1:53
     * @author : 김재성

@@ -11,9 +11,11 @@
          data-sidebar-position="fixed" data-header-position="fixed">
         <!-- side bar -->
         <th:block th:replace="fragment/sidebar :: sideFragment"></th:block>
-
-        <!-- content -->
-        <th:block layout:fragment="content"></th:block>
+        <div class="body-wrapper">
+            <th:block th:replace="fragment/navbar :: navFragment"></th:block>
+            <!-- content -->
+            <th:block layout:fragment="content"></th:block>
+        </div>
     </div>
 </body>
 </html>

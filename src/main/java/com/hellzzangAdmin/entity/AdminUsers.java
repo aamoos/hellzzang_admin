@@ -2,10 +2,13 @@ package com.hellzzangAdmin.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
@@ -17,6 +20,7 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class AdminUsers implements UserDetails {
 
     @JsonIgnore
@@ -34,17 +38,10 @@ public class AdminUsers implements UserDetails {
     @Column(name = "username", length = 50)
     private String username; //이름
 
-    @Column(name = "nickname", length = 50)
-    private String nickname; //닉네임
+    @CreatedDate
+    private LocalDateTime regDate;     //등록날짜
 
-    @Column(name = "address", length = 50)
-    private String address; //주소
-
-    @Column(name = "addressDetail", length = 50)
-    private String addressDetail; //상세주소
-
-    @Column(name = "phone", length = 50)
-    private String phone; //핸드폰
+    private String delYn;   //삭제여부
 
     @JsonIgnore
     @Column(name = "activated")

@@ -1,7 +1,7 @@
-package com.hellzzangAdmin.config;
+package com.hellzzangAdmin.authentication;
 
 import com.hellzzangAdmin.entity.AdminUsers;
-import com.hellzzangAdmin.repository.UserRepository;
+import com.hellzzangAdmin.repository.AdminUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,14 +23,21 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserDetailService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final AdminUserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
+        AdminUsers adminUser = userRepository.findByUserid(userId);
 
-        AdminUsers adminUserInfo = userRepository.findByUserid(userId);
+        if(adminUser == null){
+            throw  new UsernameNotFoundException("해당 사용자가 존재하지 않습니다.");
+        }
 
-        return adminUserInfo;
+        return new org.springframework.security.core.userdetails.User(
+                adminUser.getUsername(),
+                adminUser.getPassword(),
+                adminUser.getAuthorities()
+        );
     }
 
 

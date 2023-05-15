@@ -1,5 +1,9 @@
 package com.hellzzangAdmin.config;
 
+import com.hellzzangAdmin.authentication.CustomAuthenticationProvider;
+import com.hellzzangAdmin.authentication.LoginFailureHandler;
+import com.hellzzangAdmin.authentication.LoginSuccessHandler;
+import com.hellzzangAdmin.authentication.UserDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -65,7 +69,7 @@ public class SecurityConfig {
                 .loginProcessingUrl("/login_proc")    //해당 URL로 요청이 오면 스프링 시큐리티가 가로채서 로그인처리 -> loadUserByName
                 .successHandler(loginSuccessHandler)    //로그인 성공시 요청할 핸들러
                 .failureHandler(loginFailureHandler)    //로그인 실패시 요청할 핸들러
-                .usernameParameter("email")
+                .usernameParameter("userid")
                 .passwordParameter("password")
                 .and()
                 .logout()

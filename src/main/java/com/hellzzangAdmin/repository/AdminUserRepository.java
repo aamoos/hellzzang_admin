@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 * @Description: 사용자 repository
 **/
 
-public interface UserRepository extends JpaRepository<AdminUsers, Long> {
+public interface AdminUserRepository extends JpaRepository<AdminUsers, Long> {
     AdminUsers findByUserid(String userid);
 
 }

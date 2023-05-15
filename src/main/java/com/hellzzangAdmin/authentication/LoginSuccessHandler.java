@@ -1,4 +1,4 @@
-package com.hellzzangAdmin.config;
+package com.hellzzangAdmin.authentication;
 
 import com.google.gson.JsonObject;
 import com.hellzzangAdmin.common.CoTopComponent;

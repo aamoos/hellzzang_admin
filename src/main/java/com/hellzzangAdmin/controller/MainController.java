@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  * fileName       : MainController
  * author         : 김재성
  * date           : 2023-05-10
- * description    :
+ * description    : 메인 controller
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MainController {
     @GetMapping("/")
     public String list(String searchVal){
-        return "views/main";
+        return "views/main/dashboard";
     }
 
 }

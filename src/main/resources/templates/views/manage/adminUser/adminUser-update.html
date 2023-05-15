@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/default_layout">
+<!--  Sidebar End -->
+<!--  Main wrapper -->
+<th:block layout:fragment="content">
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title fw-semibold mb-4">관리자 등록</h5>
+                    <div class="card">
+                        <div class="card-body">
+                            <form action="#" th:action="@{'/manage/adminUser/update/' + *{id}}" th:object="${saveAdminUser}" method="post">
+                                <input type="hidden" id="id" name="id" th:value="*{id}"/>
+                                <div class="mb-3">
+                                    <label class="form-label">아이디</label>
+<!--                                    <input type="text" class="form-control" id="userid" name="userid" th:value="*{userid}"  aria-describedby="valid_userid" placeholder="아이디를 입력해주세요.">-->
+                                    <h5 class="card-title fw-semibold mb-4" th:text="*{userid}"></h5>
+                                    <input type="hidden" id="userid" name="userid" th:value="*{userid}"/>
+<!--                                    <small id="valid_userid" class="form-text text-danger" th:if="${#fields.hasErrors('userid')}" th:errors="*{userid}"></small>-->
+                                </div>
+                                <div class="mb-3">
+                                    <label for="username" class="form-label">이름</label>
+                                    <input type="text" class="form-control" id="username" name="username" th:value="*{username}" aria-describedby="valid_username" placeholder="이름을 입력해주세요.">
+                                    <small id="valid_username" class="form-text text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></small>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">패스워드</label>
+                                    <input type="password" class="form-control" id="password" name="password" aria-describedby="valid_password" placeholder="패스워드를 입력해주세요.">
+                                    <small id="valid_password" class="form-text text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="confirmPassword" class="form-label">패스워드 확인</label>
+                                    <input type="password" class="form-control" id="confirmPassword" th:field="*{confirmPassword}" aria-describedby="valid_confirmPassword" placeholder="패스워드를 입력해주세요.">
+                                    <small id="valid_confirmPassword" class="form-text text-danger" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></small>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">저장</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>

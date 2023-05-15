@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/default_layout">
+<!--  Sidebar End -->
+<!--  Main wrapper -->
+<th:block layout:fragment="content">
+    <style>
+        #thumbnail-container {
+          display: flex;
+          flex-wrap: wrap;
+        }
+
+        .thumbnail {
+          width: 300px;
+          height: 300px;
+          margin: 5px;
+        }
+    </style>
+
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title fw-semibold mb-4">짐웨어&장비 등록</h5>
+                    <div class="card">
+                        <div class="card-body">
+                            <form>
+                                <div class="mb-3">
+                                    <label for="title" class="form-label">제목</label>
+                                    <input type="text" class="form-control" id="title" aria-describedby="emailHelp">
+                                    <!--                                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>-->
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="contents" class="form-label">내용</label>
+                                    <textarea class="form-control" id="contents" rows="3"></textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="file-input" class="form-label">썸네일</label>
+                                    <input class="form-control" type="file" id="file-input" accept="image/*">
+                                    <div id="thumbnail-container"></div>
+                                </div>
+
+                                <button type="button" class="btn btn-primary">저장</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        //썸네일 보여주기
+        function handleFileSelect(event) {
+          const files = event.target.files; // 업로드된 파일들 가져오기
+          const thumbnailContainer = document.getElementById('thumbnail-container');
+
+          // 기존에 보여지고 있는 썸네일 제거
+          while (thumbnailContainer.firstChild) {
+            thumbnailContainer.removeChild(thumbnailContainer.firstChild);
+          }
+
+          // 각 파일마다 썸네일 생성
+          for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const reader = new FileReader();
+
+            // 파일 로드가 완료되었을 때 실행될 함수 정의
+            reader.onload = (function(file) {
+              return function(event) {
+                // 썸네일 이미지 엘리먼트 생성
+                const thumbnail = document.createElement('img');
+                thumbnail.className = 'thumbnail';
+                thumbnail.src = event.target.result;
+
+                // 썸네일을 썸네일 컨테이너에 추가
+                thumbnailContainer.appendChild(thumbnail);
+              };
+            })(file);
+
+            // 파일을 읽기 시작
+            reader.readAsDataURL(file);
+          }
+        }
+
+        // 파일 선택 시 handleFileSelect 함수 호출
+        document.getElementById('file-input').addEventListener('change', handleFileSelect, false);
+    </script>
+</th:block>
+</html>

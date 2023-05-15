@@ -1,4 +1,4 @@
-package com.hellzzangAdmin.config;
+package com.hellzzangAdmin.authentication;
 
 /**
  * packageName    : com.hellzzangAdmin.config

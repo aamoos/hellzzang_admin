@@ -1,6 +1,7 @@
 package com.hellzzangAdmin.service;
 
-import com.hellzzangAdmin.controller.ManageController;
+import com.hellzzangAdmin.controller.AdminMgController;
+import com.hellzzangAdmin.controller.MemberMgController;
 import com.hellzzangAdmin.dto.AdminUsersDto;
 import com.hellzzangAdmin.dto.QAdminUsersDto;
 import com.hellzzangAdmin.entity.AdminUsers;
@@ -13,10 +14,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.List;
-
 import static com.hellzzangAdmin.entity.QAdminUsers.adminUsers;
 
 /**
@@ -54,7 +54,7 @@ public class AdminUserService {
      * @Description: admin 사용자 저장
      **/
     @Transactional
-    public Long save(ManageController.SaveAdminUser saveAdminUser){
+    public Long save(@Valid AdminMgController.SaveAdminUser saveAdminUser){
         saveAdminUser.setPassword(passwordEncoder.encode(saveAdminUser.getPassword()));
         AdminUsers adminUsers = saveAdminUser.toEntity();
 

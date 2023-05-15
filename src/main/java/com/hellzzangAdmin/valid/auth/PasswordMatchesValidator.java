@@ -1,7 +1,6 @@
 package com.hellzzangAdmin.valid.auth;
 
-import com.hellzzangAdmin.controller.ManageController;
-
+import com.hellzzangAdmin.controller.AdminMgController;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
@@ -30,7 +29,7 @@ public class PasswordMatchesValidator implements ConstraintValidator<PasswordMat
     **/
     @Override
     public boolean isValid(Object obj, ConstraintValidatorContext context) {
-        ManageController.SaveAdminUser saveAdminUser = (ManageController.SaveAdminUser) obj;
+        AdminMgController.SaveAdminUser saveAdminUser = (AdminMgController.SaveAdminUser) obj;
         return saveAdminUser.getPassword().equals(saveAdminUser.getConfirmPassword());
     }
 }

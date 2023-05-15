@@ -1,7 +1,6 @@
 package com.hellzzangAdmin.service;
 
 import com.hellzzangAdmin.controller.AdminMgController;
-import com.hellzzangAdmin.controller.MemberMgController;
 import com.hellzzangAdmin.dto.AdminUsersDto;
 import com.hellzzangAdmin.dto.QAdminUsersDto;
 import com.hellzzangAdmin.entity.AdminUsers;

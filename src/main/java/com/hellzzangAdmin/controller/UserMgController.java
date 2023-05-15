@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 @Slf4j
 @RequestMapping("/manage")
-public class MemberMgController {
+public class UserMgController {
 
     /**
      * @methodName : user

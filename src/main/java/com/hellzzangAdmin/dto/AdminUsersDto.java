@@ -2,7 +2,10 @@ package com.hellzzangAdmin.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.querydsl.core.annotations.QueryProjection;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,6 +25,7 @@ import java.time.LocalDateTime;
  */
 
 @Data
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class AdminUsersDto {
 
     @JsonIgnore
@@ -46,9 +50,6 @@ public class AdminUsersDto {
     @JsonIgnore
     @Column(name = "activated")
     private boolean activated;
-
-    public AdminUsersDto() {
-    }
 
     @QueryProjection
     public AdminUsersDto(Long id, String userid, String username, String delYn, LocalDateTime regDate) {

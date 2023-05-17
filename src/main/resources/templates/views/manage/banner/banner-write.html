@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/default_layout">
+<!--  Sidebar End -->
+<!--  Main wrapper -->
+<th:block layout:fragment="content">
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title fw-semibold mb-4">배너 등록</h5>
+                    <div class="card">
+                        <div class="card-body">
+                            <form id="bannerForm" th:action="@{/manage/banner/write}" th:object="${saveBanner}" method="post">
+                                <input type="hidden" id="fileIdxList" name="fileIdxList" />
+                                <div class="mb-3">
+                                    <select class="form-select" aria-label="Default select example" id="bannerPath" name="bannerPath">
+                                        <option value="all" selected>전체</option>
+                                        <option value="/">나만의운동</option>
+                                        <option value="commu">커뮤니티</option>
+                                        <option value="shop">짐웨어&장비</option>
+                                        <option value="user">회원정보</option>
+                                    </select>
+                                    <small id="valid_username" class="form-text text-danger" th:if="${#fields.hasErrors('bannerPath')}" th:errors="*{bannerPath}"></small>
+                                </div>
+
+                                <div class="mb-3">
+                                    <!-- 드롭존 - 클릭영역 -->
+                                    <div class="dropzone"></div>
+
+                                    <!-- 파일첨부 영역 -->
+                                    <ul class="list-unstyled mb-0" id="dropzone-preview">
+                                        <li class="mt-2" id="dropzone-preview-list">
+                                            <!-- This is used as the file preview template -->
+                                            <div class="border rounded-3">
+                                                <div class="d-flex align-items-center p-2">
+                                                    <div class="flex-shrink-0 me-3">
+                                                        <div class="width-8 h-auto rounded-3">
+                                                            <img data-dz-thumbnail="data-dz-thumbnail" class="w-full h-auto rounded-3 block" src="#"
+                                                                 alt="Dropzone-Image" style="width: 120px;" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <div class="pt-1">
+                                                            <h6 class="font-semibold mb-1" data-dz-name="data-dz-name">&nbsp;</h6>
+                                                            <p class="text-sm text-muted fw-normal" data-dz-size="data-dz-size"></p>
+                                                            <strong class="error text-danger" data-dz-errormessage="data-dz-errormessage"></strong>
+                                                        </div>
+                                                    </div>
+                                                    <div class="shrink-0 ms-3">
+                                                        <button data-dz-remove="data-dz-remove" class="btn btn-sm btn-danger">Delete</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </form>
+                            <button type="button" id="saveBanner" class="btn btn-primary">저장</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>
+
+<script>
+    Dropzone.autoDiscover = false;
+
+    var dropzonePreviewNode = document.querySelector('#dropzone-preview-list'); // <li class="mt-2" id="dropzone-preview-list"> 부분을 가져와서
+    dropzonePreviewNode.id = ''; // 중복 회피를 위해 id 없애고
+    var previewTemplate = dropzonePreviewNode.parentNode.innerHTML; // 엘리먼트 전체를 저장 (템플릿)
+    dropzonePreviewNode.parentNode.removeChild(dropzonePreviewNode); // 그리고 삭제
+
+    let addedFiles = [];
+
+    const dropzone = new Dropzone(".dropzone", {
+        url: "/multi-file-upload", // 파일을 업로드할 서버 주소 url.
+        method: "post", // 기본 post로 request 감. put으로도 할수있음
+
+        previewTemplate: previewTemplate, // 만일 기본 테마를 사용하지않고 커스텀 업로드 테마를 사용하고 싶다면
+        previewsContainer: '#dropzone-preview', // 드롭존 파일 나타나는 영역을 .dropzone이 아닌 다른 엘리먼트에서 하고싶을때
+
+        autoProcessQueue: false, // 자동으로 보내기. true : 파일 업로드 되자마자 서버로 요청, false : 서버에는 올라가지 않은 상태. 따로 this.processQueue() 호출시 전송
+        clickable: true, // 클릭 가능 여부
+        autoQueue: false, // 드래그 드랍 후 바로 서버로 전송
+        createImageThumbnails: true, //파일 업로드 썸네일 생성
+
+        thumbnailHeight: 120, // Upload icon size
+        thumbnailWidth: 120, // Upload icon size
+
+        maxFiles: 3, // 업로드 파일수
+        //  maxFilesize: 100, // 최대업로드용량 : 100MB
+        //  paramName: 'image', // 서버에서 사용할 formdata 이름 설정 (default는 file)
+        parallelUploads: 2, // 동시파일업로드 수(이걸 지정한 수 만큼 여러파일을 한번에 넘긴다.)
+        uploadMultiple: true, // 다중업로드 기능
+        timeout: 300000, //커넥션 타임아웃 설정 -> 데이터가 클 경우 꼭 넉넉히 설정해주자
+
+        addRemoveLinks: false, // 업로드 후 파일 삭제버튼 표시 여부
+        dictRemoveFile: '삭제', // 삭제버튼 표시 텍스트
+        acceptedFiles: '.jpeg,.jpg,.png,.gif,.JPEG,.JPG,.PNG,.GIF', // 이미지 파일 포맷만 허용
+
+        init: function () {
+        // 최초 dropzone 설정시 init을 통해 호출
+        console.log('최초 실행');
+        let myDropzone = this; // closure 변수 (화살표 함수 쓰지않게 주의)
+
+        // 서버에 제출 submit 버튼 이벤트 등록
+        document.querySelector('#saveBanner').addEventListener('click', function () {
+            console.log('업로드');
+            // 거부된 파일이 있다면
+            if (myDropzone.getRejectedFiles().length > 0) {
+                let files = myDropzone.getRejectedFiles();
+                console.log('거부된 파일이 있습니다.', files);
+                return;
+            }
+
+            myDropzone.processQueue(); // autoProcessQueue: false로 해주었기 때문에, 메소드 api로 파일을 서버로 제출
+
+            console.log(myDropzone.files);
+
+            const dropZoneFiles = myDropzone.files;
+            var formData = new FormData();
+
+             for(let i=0; i<dropZoneFiles.length; i++){
+                formData.append('article_file', dropZoneFiles[i]); // attach dropzone image element
+            }
+
+            $.ajax({
+                  type: "POST",
+                  enctype: "multipart/form-data",
+                  url: "/multi-file-upload",
+                  data : formData,
+                  processData: false,
+                  contentType: false,
+                  success: function (data) {
+                    console.log(data);
+                    let fileIdxList = [];
+
+                    for(let i=0; i<data.length; i++){
+                        fileIdxList.push(data[i].id);
+                    }
+                    console.log(fileIdxList);
+                    let element = document.querySelector('#fileIdxList');
+                    element.value = fileIdxList;
+                    //banner 테이블 저장
+                    document.querySelector('#bannerForm').submit();
+
+                  },
+                  error: function (xhr, status, error) {
+                    alert("서버오류로 지연되고있습니다. 잠시 후 다시 시도해주시기 바랍니다.");
+                }
+            });
+
+
+      });
+
+      // 파일이 업로드되면 실행
+      this.on('addedfile', function (file) {
+         // 중복된 파일의 제거
+         if (this.files.length) {
+            // -1 to exclude current file
+            var hasFile = false;
+            for (var i = 0; i < this.files.length - 1; i++) {
+               if (
+                  this.files[i].name === file.name &&
+                  this.files[i].size === file.size &&
+                  this.files[i].lastModifiedDate.toString() === file.lastModifiedDate.toString()
+               ) {
+                  hasFile = true;
+                  this.removeFile(file);
+               }
+            }
+            if (!hasFile) {
+               addedFiles.push(file);
+            }
+         } else {
+            addedFiles.push(file);
+         }
+      });
+
+      // 업로드한 파일을 서버에 요청하는 동안 호출 실행
+      this.on('sending', function (file, xhr, formData) {
+         console.log('보내는중');
+      });
+
+      // 서버로 파일이 성공적으로 전송되면 실행
+      this.on('success', function (file, responseText) {
+         console.log('성공');
+      });
+
+      // 업로드 에러 처리
+      this.on('error', function (file, errorMessage) {
+         alert(errorMessage);
+      });
+   },
+
+   });
+
+    //배너저장
+    function bannerSave(fileList){
+
+    }
+
+</script>

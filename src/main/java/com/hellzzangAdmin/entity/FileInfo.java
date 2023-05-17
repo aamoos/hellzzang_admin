@@ -1,5 +1,6 @@
 package com.hellzzangAdmin.entity;
 
+import com.hellzzangAdmin.dto.BannerDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,8 +31,7 @@ import java.time.LocalDateTime;
 public class FileInfo {
 
     @Id
-    @GeneratedValue
-    @Column(name = "file_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;                    //id
 
     @Column(nullable = false)

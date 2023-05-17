@@ -1,8 +1,10 @@
 package com.hellzzangAdmin.dto;
 
 import com.hellzzangAdmin.entity.FileInfo;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * packageName    : com.hellzzangAdmin.dto

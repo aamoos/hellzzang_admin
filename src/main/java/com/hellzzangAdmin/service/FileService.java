@@ -26,6 +26,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
+import static com.hellzzangAdmin.entity.QFileInfo.fileInfo;
+
 /**
  * packageName    : com.hellzzangAdmin.service
  * fileName       : FileService
@@ -48,9 +50,10 @@ public class FileService {
     private String uploadFilePath;
 
     /** 단일 파일업로드 */
-    public FileDto uploadFile(HttpServletRequest request, MultipartFile multipartFile) throws Exception{
+    public FileInfo uploadFile(HttpServletRequest request, MultipartFile multipartFile) throws Exception{
 
         FileDto fileDto = new FileDto();
+        FileInfo fileInfo = null;
 
         String _filePath = String.valueOf(request.getParameter("filePath")).equals("null") ? uploadFilePath : uploadFilePath+String.valueOf(request.getParameter("filePath")+"/");
 
@@ -58,9 +61,9 @@ public class FileService {
             if(multipartFile != null){
                 // 파일이 있을때 탄다.
                 if(multipartFile.getSize() > 0 && !multipartFile.getOriginalFilename().equals("")) {
-                    String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
-                    String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
-                    String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
+                    String originalFileName = multipartFile.getOriginalFilename();    //오리지날 파일명
+                    String extension = originalFileName.substring(originalFileName.lastIndexOf("."));    //파일 확장자
+                    String savedFileName = UUID.randomUUID() + extension;    //저장될 파일 명
 
                     File targetFile = new File(_filePath + File.separator + savedFileName);
 
@@ -71,12 +74,12 @@ public class FileService {
                             .extension(extension)
                             .size(multipartFile.getSize())
                             .contentType(multipartFile.getContentType())
+                            .delYn("N")
+                            .extension(extension)
                             .build();
 
                     //마지막 시퀀스 조회
-                    Long lastSeq = fileRepository.save(fileDto.toEntity()).getId();
-
-                    log.info("fileId={}", lastSeq);
+                    fileInfo = fileRepository.save(fileDto.toEntity());
 
                     try {
                         InputStream fileStream = multipartFile.getInputStream();
@@ -84,7 +87,7 @@ public class FileService {
                         //배열에 담기
                     } catch (Exception e) {
                         //파일삭제
-                        FileUtils.deleteQuietly(targetFile);	//저장된 현재 파일 삭제
+                        FileUtils.deleteQuietly(targetFile);    //저장된 현재 파일 삭제
                         e.printStackTrace();
                     }
                 }
@@ -93,14 +96,15 @@ public class FileService {
         }catch(Exception e){
             e.printStackTrace();
         }
-        return fileDto;
+        return fileInfo;
     }
 
 
     /** 멀티파일 업로드 */
-    public FileDto MultiUploadFile(HttpServletRequest request, List<MultipartFile> multipartFile) throws IOException {
+    public List<FileInfo> MultiUploadFile(HttpServletRequest request, List<MultipartFile> multipartFile) throws IOException {
 
         FileDto fileDto = new FileDto();
+        List<FileInfo> fileList = new ArrayList<>();
 
         //파일 시퀀스 리스트
         List<Integer> fileIds = new ArrayList<>();
@@ -114,9 +118,9 @@ public class FileService {
 
                     for(MultipartFile file1 : multipartFile) {
 
-                        String originalFileName = file1.getOriginalFilename();	//오리지날 파일명
-                        String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
-                        String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
+                        String originalFileName = file1.getOriginalFilename();    //오리지날 파일명
+                        String extension = originalFileName.substring(originalFileName.lastIndexOf("."));    //파일 확장자
+                        String savedFileName = UUID.randomUUID() + extension;    //저장될 파일 명
 
                         File targetFile = new File(_filePath + File.separator + savedFileName);
 
@@ -129,23 +133,21 @@ public class FileService {
                                 .uploadDir(_filePath)
                                 .size(file1.getSize())
                                 .contentType(file1.getContentType())
+                                .delYn("N")
+                                .extension(extension)
                                 .build();
 
                         //파일 insert
-                        Long lastSeq = fileRepository.save(fileDto.toEntity()).getId();
-
-                        //마지막 시퀀스 넣기
-                        file.put("fileIdx", lastSeq);
-
-                        log.info("fileId={}", lastSeq);
+                        FileInfo fileInfo = fileRepository.save(fileDto.toEntity());
 
                         try {
                             InputStream fileStream = file1.getInputStream();
                             FileUtils.copyInputStreamToFile(fileStream, targetFile); //파일 저장
+                            fileList.add(fileInfo);
                             //배열에 담기
                         } catch (Exception e) {
                             //파일삭제
-                            FileUtils.deleteQuietly(targetFile);	//저장된 현재 파일 삭제
+                            FileUtils.deleteQuietly(targetFile);    //저장된 현재 파일 삭제
                             e.printStackTrace();
                             break;
                         }
@@ -156,7 +158,7 @@ public class FileService {
             e.printStackTrace();
         }
 
-        return fileDto;
+        return fileList;
     }
 
 

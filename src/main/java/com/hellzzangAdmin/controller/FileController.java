@@ -1,6 +1,7 @@
 package com.hellzzangAdmin.controller;
 
 import com.hellzzangAdmin.dto.FileDto;
+import com.hellzzangAdmin.entity.FileInfo;
 import com.hellzzangAdmin.repository.FileRepository;
 import com.hellzzangAdmin.service.FileService;
 import lombok.RequiredArgsConstructor;
@@ -38,14 +39,14 @@ public class FileController {
      * @throws Exception */
     @PostMapping("/file-upload")
     @ResponseBody
-    public FileDto fileUpload(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws Exception{
+    public FileInfo fileUpload(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws Exception{
         return fileService.uploadFile(request, file);
     }
 
     /** 멀티 파일업로드 */
     @PostMapping(value={"/multi-file-upload"})
     @ResponseBody
-    public FileDto multiFileUpload(
+    public List<FileInfo> multiFileUpload(
             @RequestParam(value = "article_file", required = false) List<MultipartFile> multipartFile
             , HttpServletRequest request) throws IOException {
         return fileService.MultiUploadFile(request, multipartFile);

@@ -2,6 +2,8 @@ package com.hellzzangAdmin.authentication;
 
 import com.google.gson.JsonObject;
 import com.hellzzangAdmin.common.CoTopComponent;
+import com.hellzzangAdmin.entity.AdminUsers;
+import com.hellzzangAdmin.repository.AdminUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -29,7 +31,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class LoginSuccessHandler extends CoTopComponent implements AuthenticationSuccessHandler {
 
-//    private final UserService userService;
+    private final AdminUserRepository adminUserRepository;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -40,6 +42,9 @@ public class LoginSuccessHandler extends CoTopComponent implements Authenticatio
 
         HttpSession session = request.getSession(true);
         session.setMaxInactiveInterval(60 * 60 * 3);
+
+        AdminUsers adminUsers = adminUserRepository.findByUserid(auth.getName());
+        session.setAttribute("id", adminUsers.getId());
 
         //마지막 로그인시간 insert
 //        userService.updateLastLoginDate(((UserInfo) auth.getPrincipal()));

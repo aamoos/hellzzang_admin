@@ -25,17 +25,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ManageController {
 
     /**
-    * @methodName : banner
-    * @date : 2023-05-11 오전 10:46
-    * @author : 김재성
-    * @Description: 배너 리스트
-    **/
-    @GetMapping("/banner/list")
-    public String banner(){
-        return "views/manage/banner/banner-list";
-    }
-
-    /**
     * @methodName : category
     * @date : 2023-05-11 오전 10:47
     * @author : 김재성

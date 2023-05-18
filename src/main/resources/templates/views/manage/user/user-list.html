@@ -1,10 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout/default_layout">
+
+
+<!-- 현재 화면에서만 사용하는 js -->
+<th:block layout:fragment="script">
+  <script src="/js/user-list.js"></script>
+</th:block>
+
+
 <!--  Sidebar End -->
 <!--  Main wrapper -->
 <th:block layout:fragment="content">
         <div class="container-fluid">
+            <div class="input-group mb-3">
+                <input type="text" id="searchVal" class="form-control" placeholder="검색어를 입력해주세요" aria-label="Recipient's username" aria-describedby="button-addon2" th:value="${searchVal}">
+                <button class="btn btn-outline-secondary" type="button" id="button-addon2" th:onclick="userList()">검색</button>
+            </div>
+
             <div class="row">
                 <div class="col-lg-12 d-flex align-items-stretch">
                     <div class="card w-100">
@@ -15,66 +28,56 @@
                                     <thead class="text-dark fs-4">
                                     <tr>
                                         <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">아이디</h6>
+                                            <h6 class="fw-semibold mb-0">닉네임</h6>
                                         </th>
                                         <th class="border-bottom-0">
                                             <h6 class="fw-semibold mb-0">이름</h6>
                                         </th>
                                         <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">등록자</h6>
+                                            <h6 class="fw-semibold mb-0">등록일</h6>
                                         </th>
 
                                         <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">등록일</h6>
+                                            <h6 class="fw-semibold mb-0">삭제여부</h6>
+                                        </th>
+
+                                        <th class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-0">휴면상태</h6>
+                                        </th>
+
+                                        <th class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-0">계정정지</h6>
                                         </th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
+                                    <tr th:each="list, listIndex : ${infoList}">
                                         <td class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-1">aamoos</h6>
+                                            <h6 class="fw-semibold mb-1" th:text="${list.nickname}"></h6>
                                         </td>
 
                                         <td class="border-bottom-0">
-                                            <span class="fw-normal">2개</span>
+                                            <span class="fw-normal" th:text="${list.username}"></span>
                                         </td>
 
                                         <td class="border-bottom-0">
-                                            <h6 class="fw-normal">김재성</h6>
+                                            <h6 class="fw-normal" th:text="${#temporals.format(list.joinDate, 'yyyy-MM-dd')}"></h6>
+                                            <h6 class="fw-normal" th:text="${#temporals.format(list.joinDate, 'HH시 mm분')}"></h6>
                                         </td>
 
                                         <td class="border-bottom-0">
-                                            <h6 class="fw-normal">2023-05-11</h6>
+                                            <h6 class="fw-normal" th:text="${list.delYn}"></h6>
                                         </td>
 
                                         <td class="border-bottom-0">
-                                            <button type="button" class="btn btn-info m-1">수정</button>
-                                            <button type="button" class="btn btn-danger m-1">삭제</button>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-1">lhj</h6>
+                                            <h6 class="fw-normal" th:if="${list.dorYn} == 'Y'" th:text="휴면"></h6>
+                                            <h6 class="fw-normal" th:if="${list.dorYn} == 'N'" th:text="비휴면"></h6>
                                         </td>
 
                                         <td class="border-bottom-0">
-                                            <span class="fw-normal">2개</span>
+                                            <button th:if="${list.blockYn} == 'Y'" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"  th:attr="data-id=${list.id}" th:text="설정" onclick="setting(this)"></button>
+                                            <button th:if="${list.blockYn} == 'N'" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" th:attr="data-id=${list.id}" th:text="설정" onclick="setting(this)"></button>
                                         </td>
-
-                                        <td class="border-bottom-0">
-                                            <h6 class="fw-normal">김재성</h6>
-                                        </td>
-
-                                        <td class="border-bottom-0">
-                                            <h6 class="fw-normal">2023-05-11</h6>
-                                        </td>
-
-                                        <td class="border-bottom-0">
-                                            <button type="button" class="btn btn-info m-1">수정</button>
-                                            <button type="button" class="btn btn-danger m-1">삭제</button>
-                                        </td>
-                                    </tr>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -83,8 +86,31 @@
                     </div>
                 </div>
             </div>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button onclick="location.href='/manage/user/save'" type="button" class="btn btn-outline-primary m-1">회원 등록</button>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">날짜 선택</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <select class="form-select" id="selectBlock">
+                        <option value="-1">정지 해제</option>
+                        <option value="1">3일(test중 1분)</option>
+                        <option value="2">5일(test중 2분)</option>
+                        <option value="3">10일(test중 3분)</option>
+                        <option value="4">20일(test중 4분)</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="blockTime()">Save</button>
+                </div>
             </div>
         </div>
     </div>

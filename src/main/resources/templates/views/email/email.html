@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<div style="background:#ffffff;margin:0;padding:0;font-family:'Apple SD Gothic', '맑은고딕', 'Nanum Gothic', sans-serif">
+    <div style="background:#ffffff;margin:0 auto;padding:0;width:100%;max-width:600px;box-sizing:border-box;-webkit-text-size-adjust:none">
+        <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" style="background:#fff;margin:0;padding:0;max-width:600px">
+            <tbody>
+                <tr>
+                    <td style="background:#ffffff;padding:63px 2px 43px">
+                        <a th:href="@{http://localhost:8080/userLogin}" rel="noreferrer noopener" target="_blank"><img src="/assets/images/hellzzangLogo/hellzzangLogo-circle.png" width="116" height="38" border="0" alt="점핏" style="display:block;" loading="lazy"></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="background:#ffffff;padding: 0 2px 0;">
+                        <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0">
+                            <!--- - - - - - - - - -tbody start- - - - - - - - -->
+                            <tbody>
+                                <tr>
+                                    <td align="left" style="background:#fff;padding:0">
+                                        <p style="margin:0 0 24px;padding:0;font-family:'Apple SD Gothic', '맑은고딕', 'Nanum Gothic', sans-serif;font-size:26px;color:#000;letter-spacing:-1px;line-height:32px;font-weight:bold">
+                                        계정이 휴면상태로 전환되었습니다.
+                                        </p>
+                                        <p style="margin:0;padding:0;font-family:'Apple SD Gothic', '맑은고딕', 'Nanum Gothic',sans-serif;font-size:15px;color:#404040;letter-spacing:-1px;line-height:24px;word-break: keep-all">
+                                            안녕하세요. 운동의 모든 것, Hellzzang 입니다.<br>
+                                            회원님의 소중한 개인정보 보호를 위해 회원님의 계정을 <b>휴면상태로 전환</b>하였습니다.
+                                        </p>
+                                        <div style="margin:30px 0;background:#fefefe;border-radius:3px">
+                                            <table align="center" width="100%" border="0" bgcolor="#feebec" cellpadding="0" style="border:0">
+                                                <tbody>
+                                                    <tr>
+                                                        <td align="left" style="font-family:'Apple SD Gothic', '맑은고딕', 'Nanum Gothic',sans-serif;padding:20px;">
+                                                            <p th:text="'대상계정 : ' + ${userid}" style="margin:0;padding:0;font-family:'Apple SD Gothic', '맑은고딕', 'Nanum Gothic',sans-serif;font-size:15px;color:#404040;letter-spacing:-1px;line-height:24px">
+                                                            </p>
+                                                            <p th:text="'휴면계정 전환일 : ' + ${currentDate}" style="margin:0;padding:0;font-family:'Apple SD Gothic', '맑은고딕', 'Nanum Gothic',sans-serif;font-size:15px;color:#404040;letter-spacing:-1px;line-height:24px">
+                                                            </p>
+                                                            <p style="margin:0;padding:0;font-family:'Apple SD Gothic', '맑은고딕', 'Nanum Gothic',sans-serif;font-size:15px;color:#404040;letter-spacing:-1px;line-height:24px">
+                                                                분리 보관 되는 항목 : 이름, 이메일, 연락처 등 서비스 이용 시 수집된 개인정보
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <p style="margin:0;padding:0;font-family:'Apple SD Gothic', '맑은고딕', 'Nanum Gothic',sans-serif;font-size:15px;color:#404040;letter-spacing:-1px;line-height:24px;word-break: keep-all">
+                                            휴면상태로 전환 시 Hellzzang 서비스 이용이 중지 되며, 개인정보는 관계 법령에 따라 안전하게 분리 보관됩니다. 휴면계정 전환 후 5년이 지나도 로그인 이력이 없다면, 분리 보관된 개인정보는 모두 삭제됩니다.<br><br>
+                                            <b>Hellzzang 서비스를 계속 이용 하고 싶으신 경우, 로그인 즉시 정상적인 서비스 이용이 가능합니다.</b>
+                                        </p>
+                                        <table align="center" width="250" border="0" cellpadding="0" cellspacing="0" style="border:0">
+                                            <tbody>
+                                                <tr>
+                                                    <td height="56"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" height="56" style="border-radius:4px;background:#000">
+                                                        <a th:href="@{http://localhost:8080/userLogin}" target="_blank" style="display:block;line-:56px;border:0;font-family:'apple sd gothic', '맑은고딕', 'nanum gothic',sans-serif;color:#5cf636;font-size:16px;letter-spacing:-0.5px;text-decoration:none;font-weight:bold" rel="noreferrer noopener">
+                                                            Hellzzang 로그인하기
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td height="56"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <!--- - - - - - - - - -tbody end- - - - - - - - - - -->
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="border-top:1px solid #ececec;background:#fff;padding:0 0 72px">
+                        <p style="margin:24px 0;padding:0;font-family:'Apple SD Gothic', '맑은고딕', 'Nanum Gothic',sans-serif;color:#909090;font-size:13px;line-height:18px;letter-spacing:-0.5px;text-align:left">
+                            ※ 본 메일은 발신전용 메일로 회신을 받을 수 없습니다.<br>
+                            ©Hellzzang All Rights Reserved.<br>
+                            대한민국 여기저기<br>
+                            고객센터 : 010-9180-7250, jun950617@naver.com (평일 13:00 - 13:10, 점심시간 12:00 - 13:00, 주말·공휴일 휴무)
+                        </p>
+                        <div style="font-family:'Apple SD Gothic', '맑은고딕', 'Nanum Gothic',sans-serif;color:#909090;font-size:13px;line-height:16px;letter-spacing:-0.5px;text-align:left">
+                            <a href="https://jumpit.co.kr/policy/terms" target="_blank" style="font-family:'apple sd gothic', '맑은고딕', 'nanum gothic',sans-serif;color:#909090;font-size:13px;line-:16px;letter-spacing:-0.5px;text-align:left;text-decoration:underline" rel="noreferrer noopener">이용약관</a>
+                            &nbsp;&nbsp;|&nbsp;&nbsp;
+                            <a href="https://jumpit.co.kr/policy/private" target="_blank" style="font-family:'apple sd gothic', '맑은고딕', 'nanum gothic',sans-serif;color:#909090;font-size:13px;line-:16px;letter-spacing:-0.5px;text-align:left;text-decoration:underline" rel="noreferrer noopener">개인정보
+                                처리방침</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

@@ -38,6 +38,9 @@ public class AdminUsers implements UserDetails {
     @Column(name = "username", length = 50)
     private String username; //이름
 
+    @Column(name = "nickname")
+    private String nickname;
+
     @CreatedDate
     private LocalDateTime regDate;     //등록날짜
 

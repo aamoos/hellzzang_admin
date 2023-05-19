@@ -121,11 +121,7 @@ public class BannerService {
                         banner.delYn,
                         banner.adminUsers.id,
                         adminUsers.username,
-                        ExpressionUtils.as(
-                                JPAExpressions.select(count(bannerFile.id))
-                                        .from(bannerFile, banner)
-                                        .where(bannerFile.bannerId.eq(banner.id)),
-                                "fileTotal")
+                        banner.fileTotal
                 ))
                 .from(banner)
                 .innerJoin(adminUsers).on(adminUsers.id.eq(banner.adminUsers.id))
@@ -166,8 +162,10 @@ public class BannerService {
         Banner banner = Banner.builder()
                 .id(saveBanner.getId())
                 .bannerPath(saveBanner.getBannerPath())
+                .fileTotal(saveBanner.getFileTotal())
                 .adminUsers(adminUsers)
                 .build();
+
         Long bannerId = bannerRepository.save(banner).getId();
 
         //기존에 등록된 파일 전부 삭제

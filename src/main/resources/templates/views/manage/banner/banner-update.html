@@ -14,6 +14,7 @@
                             <form id="bannerForm" th:action="@{/manage/banner/update/{id}(id=${saveBanner.id})}" th:object="${saveBanner}" method="post">
                                 <input type="hidden" id="id" name="id" th:value="*{id}"/>
                                 <input type="hidden" id="fileIdxList" name="fileIdxList" />
+                                <input type="hidden" id="fileTotal" name="fileTotal" />
                                 <div class="mb-3">
                                     <select class="form-select" aria-label="Default select example" id="bannerPath" name="bannerPath">
                                         <option value="all" th:selected="${saveBanner.bannerPath == 'all'}">전체</option>
@@ -28,7 +29,7 @@
                                 <div class="mb-3">
                                     <!-- 드롭존 - 클릭영역 -->
                                     <div class="dropzone"></div>
-
+                                    <small id="valid_fileIdxList" class="form-text text-danger" th:if="${#fields.hasErrors('fileIdxList')}" th:errors="*{fileIdxList}"></small>
                                     <ul class="list-unstyled mb-0" id="dropzone-preview-detail">
                                         <li th:each="list, userStat : ${bannerFile}" class="mt-2">
                                             <!-- This is used as the file preview template -->
@@ -177,6 +178,7 @@
                     console.log(fileIdxList);
                     let element = document.querySelector('#fileIdxList');
                     element.value = fileIdxList;
+                    document.querySelector('#fileTotal').value = fileIdxList.length;
                     //banner 테이블 저장
                     document.querySelector('#bannerForm').submit();
 

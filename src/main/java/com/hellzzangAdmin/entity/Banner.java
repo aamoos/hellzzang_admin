@@ -39,6 +39,8 @@ public class Banner {
 
     private String delYn;
 
+    private Long fileTotal;
+
     @CreatedDate
     private LocalDateTime regDate;     //등록날짜
 
@@ -47,10 +49,11 @@ public class Banner {
     private AdminUsers adminUsers;
 
     @Builder
-    public Banner(Long id, String bannerPath, AdminUsers adminUsers){
+    public Banner(Long id, String bannerPath, Long fileTotal, AdminUsers adminUsers){
         this.id = id;
         this.bannerPath = bannerPath;
         this.delYn = "N";
+        this.fileTotal = fileTotal;
         this.adminUsers = adminUsers;
     }
 

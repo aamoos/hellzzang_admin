@@ -143,10 +143,10 @@ public class BannerMgController {
         }
 
         //해당 path로 등록이 되어있는지 확인
-        List<Banner> list = bannerRepository.findByBannerPathAndDelYn(saveBanner.getBannerPath(), "N");
+         List<Banner> list = bannerRepository.findByBannerPathAndDelYnAndIdNot(saveBanner.getBannerPath(), "N", saveBanner.getId());
 
         //이미 등록이 있는경우
-        if(list.size() != 0){
+        if(list.size() == 1){
             result.rejectValue("bannerPath", "bannerPath.pass", "이미 등록된 배너입니다.");
             return "views/manage/banner/banner-update";
         }
@@ -180,14 +180,16 @@ public class BannerMgController {
 
         private Long id;
         private String bannerPath;
+        private Long fileTotal;
 
         @Size(min=1, message = "배너이미지를 등록해주세요.")
         private List<Long> fileIdxList;
 
         @Builder
-        public SaveBanner(Long id, String bannerPath){
+        public SaveBanner(Long id, String bannerPath, Long fileTotal){
             this.id = id;
             this.bannerPath = bannerPath;
+            this.fileTotal = fileTotal;
         }
 
     }

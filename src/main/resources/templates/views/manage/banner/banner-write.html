@@ -13,6 +13,7 @@
                         <div class="card-body">
                             <form id="bannerForm" th:action="@{/manage/banner/write}" th:object="${saveBanner}" method="post">
                                 <input type="hidden" id="fileIdxList" name="fileIdxList" />
+                                <input type="hidden" id="fileTotal" name="fileTotal" />
                                 <div class="mb-3">
                                     <select class="form-select" aria-label="Default select example" id="bannerPath" name="bannerPath">
                                         <option value="all" selected>전체</option>
@@ -27,7 +28,7 @@
                                 <div class="mb-3">
                                     <!-- 드롭존 - 클릭영역 -->
                                     <div class="dropzone"></div>
-
+                                    <small id="valid_fileIdxList" class="form-text text-danger" th:if="${#fields.hasErrors('fileIdxList')}" th:errors="*{fileIdxList}"></small>
                                     <!-- 파일첨부 영역 -->
                                     <ul class="list-unstyled mb-0" id="dropzone-preview">
                                         <li class="mt-2" id="dropzone-preview-list">
@@ -146,6 +147,7 @@
                     let element = document.querySelector('#fileIdxList');
                     element.value = fileIdxList;
                     //banner 테이블 저장
+                    document.querySelector('#fileTotal').value = fileIdxList.length;
                     document.querySelector('#bannerForm').submit();
 
                   },

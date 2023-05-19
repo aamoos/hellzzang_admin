@@ -20,4 +20,7 @@ public interface BannerRepository extends JpaRepository<Banner, Long> {
 
     List<Banner> findByBannerPathAndDelYn(String bannerPath, String delYn);
 
+    List<Banner> findByBannerPathAndDelYnAndIdNot(String bannerPath, String delYn, Long id);
+
+
 }

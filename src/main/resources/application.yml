@@ -13,19 +13,19 @@ spring: #띄어쓰기 없음
       max-file-size: 50MB
       max-request-size: 50MB
 
-#  sql:
-#    init:
-#      mode: always
+  sql:
+    init:
+      mode: always
 
   jpa: #띄어쓰기 2칸
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate: #띄어쓰기 4칸
-      ddl-auto: none #띄어쓰기 6칸
+      ddl-auto: create #띄어쓰기 6칸
     properties: #띄어쓰기 4칸
       hibernate: #띄어쓰기 6칸
-        # show_sql: true #띄어쓰기 8칸
-#        format_sql: true #띄어쓰기 8칸
-#        show_sql: true #이향준 추가
+         show_sql: true #띄어쓰기 8칸
+         format_sql: true #띄어쓰기 8칸
+         use_sql_comments: true
     defer-datasource-initialization: true
 
   mvc:
@@ -60,7 +60,11 @@ spring: #띄어쓰기 없음
 
 logging:
   level: #띄어쓰기 없음
-    org.hibernate.SQL: debug #띄어쓰기 2칸
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace
 
 # 파일 업로드 경로 설정
 file:

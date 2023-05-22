@@ -43,7 +43,7 @@ public class AdminUsersDto {
     @Column(name = "username", length = 50)
     private String username; //이름
 
-    private LocalDateTime regDate;     //등록날짜
+    private String createdDate;     //등록날짜
 
     private String delYn;   //삭제여부
 
@@ -52,12 +52,12 @@ public class AdminUsersDto {
     private boolean activated;
 
     @QueryProjection
-    public AdminUsersDto(Long id, String userid, String username, String delYn, LocalDateTime regDate) {
+    public AdminUsersDto(Long id, String userid, String username, String delYn, String createdDate) {
         this.id = id;
         this.userid = userid;
         this.username = username;
         this.delYn = delYn;
-        this.regDate = regDate;
+        this.createdDate = createdDate;
     }
 
 

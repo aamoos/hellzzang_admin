@@ -45,27 +45,4 @@ public class ManageController {
     public String community(){
         return "views/manage/community/community-list";
     }
-
-    /**
-    * @methodName : gymWear
-    * @date : 2023-05-11 오전 10:47
-    * @author : 김재성
-    * @Description: 짐웨어 리스트
-    **/
-    @GetMapping("/gymWear/list")
-    public String gymWear(){
-        return "views/manage/gymWear/gymWear-list";
-    }
-
-    /**
-    * @methodName : gymWearSave
-    * @date : 2023-05-11 오후 3:52
-    * @author : 김재성
-    * @Description: 짐웨어 등록화면
-    **/
-    @GetMapping("/gymWear/save")
-    public String gymWearSave(){
-        return "views/manage/gymWear/gymWear-save";
-    }
-
 }

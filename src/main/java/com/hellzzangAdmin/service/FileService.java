@@ -81,6 +81,9 @@ public class FileService {
                     //마지막 시퀀스 조회
                     fileInfo = fileRepository.save(fileDto.toEntity());
 
+                    //썸네일 url 설정
+                    fileInfo.updateUrl("/thumbnail/"+fileInfo.getId());
+
                     try {
                         InputStream fileStream = multipartFile.getInputStream();
                         FileUtils.copyInputStreamToFile(fileStream, targetFile); //파일 저장

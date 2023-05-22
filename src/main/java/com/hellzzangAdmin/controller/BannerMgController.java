@@ -191,7 +191,6 @@ public class BannerMgController {
             this.bannerPath = bannerPath;
             this.fileTotal = fileTotal;
         }
-
     }
 
 

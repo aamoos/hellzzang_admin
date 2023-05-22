@@ -36,13 +36,15 @@ public class FileDto {
 
     private String delYn;               //삭제여부
 
+    private String url;                 //썸네일 url
+
     public FileDto() {
 
     }
 
     @Builder
     public FileDto(Long id, String originFileName, String savedFileName, String uploadDir
-            , String extension, Long size, String contentType, String delYn) {
+            , String extension, Long size, String contentType, String delYn, String url) {
         this.id = id;
         this.originFileName = originFileName;
         this.savedFileName = savedFileName;
@@ -51,6 +53,7 @@ public class FileDto {
         this.size = size;
         this.contentType = contentType;
         this.delYn = delYn;
+        this.url = url;
     }
 
     public FileInfo toEntity() {

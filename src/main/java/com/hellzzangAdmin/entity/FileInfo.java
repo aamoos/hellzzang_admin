@@ -53,6 +53,9 @@ public class FileInfo {
 
     private String delYn;               //삭제여부
 
+    @Transient
+    private String url;        //썸네일 url
+
     @Builder
     public FileInfo(Long id, String originFileName, String savedFileName
             , String uploadDir, String extension, Long size, String contentType, String delYn){
@@ -66,8 +69,23 @@ public class FileInfo {
         this.delYn = delYn;
     }
 
+    /**
+    * @methodName : updateDelYn
+    * @date : 2023-05-22 오전 10:07
+    * @author : 김재성
+    * @Description: 삭제여부 업데이트
+    **/
     public void updateDelYn(String delYn){
         this.delYn = delYn;
     }
 
+    /**
+    * @methodName : updateUrl
+    * @date : 2023-05-22 오전 10:07
+    * @author : 김재성
+    * @Description: 썸네일 url 업데이트
+    **/
+    public void updateUrl(String url){
+        this.url = url;
+    }
 }

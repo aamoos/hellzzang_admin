@@ -102,7 +102,7 @@ public class AdminUserService {
                         adminUsers.userid,
                         adminUsers.username,
                         adminUsers.delYn,
-                        adminUsers.regDate
+                        adminUsers.createdDate
                 ))
                 .from(adminUsers)
                 .where(containsSearch(searchVal))

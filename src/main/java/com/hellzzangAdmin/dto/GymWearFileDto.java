@@ -1,6 +1,5 @@
 package com.hellzzangAdmin.dto;
 
-import com.hellzzangAdmin.entity.FileInfo;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -8,8 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import java.time.LocalDateTime;
 
 /**
@@ -26,33 +23,38 @@ import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class BannerDto {
+public class GymWearFileDto {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    private String bannerPath;
+    private String contentType;
 
     private String delYn;
 
-    private Long regUserIdx;
+    private String extension;
 
-    private String regUserName;
+    private String originFileName;
 
-    private Long fileTotal;
+    private LocalDateTime regDate;
 
-    private String createdDate;
+    private String savedFileName;
+
+    private Long size;
+
+    private String uploadDir;
 
     @QueryProjection
-    public BannerDto(Long id, String bannerPath, String delYn, Long regUserIdx, String regUserName, Long fileTotal, String createdDate) {
+    public GymWearFileDto(Long id, String delYn, String extension, String originFileName, LocalDateTime regDate, String savedFileName, Long size, String uploadDir) {
         this.id = id;
-        this.bannerPath = bannerPath;
         this.delYn = delYn;
-        this.regUserIdx = regUserIdx;
-        this.regUserName = regUserName;
-        this.fileTotal = fileTotal;
-        this.createdDate = createdDate;
+        this.extension = extension;
+        this.originFileName = originFileName;
+        this.regDate = regDate;
+        this.savedFileName = savedFileName;
+        this.size = size;
+        this.uploadDir = uploadDir;
     }
 
 }

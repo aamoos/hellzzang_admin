@@ -78,4 +78,9 @@ public class GymWear {
         this.delYn = "N";
     }
 
+    public GymWear delete(){
+        this.delYn = "Y";
+        return this;
+    }
+
 }

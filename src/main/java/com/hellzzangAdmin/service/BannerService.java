@@ -14,6 +14,7 @@ import com.hellzzangAdmin.repository.BannerFileRepository;
 import com.hellzzangAdmin.repository.BannerRepository;
 import com.hellzzangAdmin.repository.FileRepository;
 import com.querydsl.core.types.ExpressionUtils;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -97,12 +98,12 @@ public class BannerService {
     * @author : 김재성
     * @Description: 배너 페이징 조회
     **/
-    public Page<BannerDto> selectBannerList(Pageable pageable){
+    public Page<BannerDto> selectBannerList(Pageable pageable, String searchVal){
         //admin 사용자 리스트 조회
-        List<BannerDto> content = getBannerList(pageable);
+        List<BannerDto> content = getBannerList(pageable, searchVal);
 
         //admin 사용자 total 조회
-        Long count = getCount();
+        Long count = getCount(searchVal);
         return new PageImpl<>(content, pageable, count);
     }
 
@@ -112,7 +113,7 @@ public class BannerService {
     * @author : 김재성
     * @Description: 배너 리스트 조회
     **/
-    private List<BannerDto> getBannerList(Pageable pageable) {
+    private List<BannerDto> getBannerList(Pageable pageable, String searchVal) {
 
         List<BannerDto> content = jpaQueryFactory
                 .select(new QBannerDto(
@@ -121,11 +122,13 @@ public class BannerService {
                         banner.delYn,
                         banner.adminUsers.id,
                         adminUsers.username,
-                        banner.fileTotal
+                        banner.fileTotal,
+                        banner.createdDate
                 ))
                 .from(banner)
                 .innerJoin(adminUsers).on(adminUsers.id.eq(banner.adminUsers.id))
                 .where(banner.delYn.eq("N"))
+                .where(containsSearch(searchVal))
                 .orderBy(banner.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -141,11 +144,12 @@ public class BannerService {
     * @author : 김재성
     * @Description: 배너 total 조회
     **/
-    private Long getCount(){
+    private Long getCount(String searchVal){
         Long count = jpaQueryFactory
                 .select(banner.count())
                 .from(banner)
                 .innerJoin(adminUsers).on(adminUsers.id.eq(banner.adminUsers.id))
+                .where(containsSearch(searchVal))
                 .where(adminUsers.id.eq(banner.adminUsers.id))
                 .where(banner.delYn.eq("N"))
                 .fetchOne();
@@ -163,7 +167,6 @@ public class BannerService {
                 .id(saveBanner.getId())
                 .bannerPath(saveBanner.getBannerPath())
                 .fileTotal(saveBanner.getFileTotal())
-                .adminUsers(adminUsers)
                 .build();
 
         Long bannerId = bannerRepository.save(banner).getId();
@@ -195,5 +198,9 @@ public class BannerService {
         Banner banner = bannerRepository.findById(id).get();
         banner.delete();
         return banner.getId();
+    }
+
+    private BooleanExpression containsSearch(String searchVal){
+        return searchVal != null ? banner.bannerPath.contains(searchVal) : null;
     }
 }

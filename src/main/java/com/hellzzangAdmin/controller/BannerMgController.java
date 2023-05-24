@@ -54,11 +54,12 @@ public class BannerMgController {
      * @Description: 배너 리스트 화면
      **/
     @GetMapping("/banner/list")
-    public String list(@PageableDefault Pageable pageable, Model model){
-        Page<BannerDto> results = bannerService.selectBannerList(pageable);
+    public String list(String searchVal, @PageableDefault Pageable pageable, Model model){
+        Page<BannerDto> results = bannerService.selectBannerList(pageable, searchVal);
 
         model.addAttribute("list", results);
         model.addAttribute("maxPage", 5);
+        model.addAttribute("searchVal", searchVal);
         model.addAttribute("totalCount", results.getTotalElements());
         model.addAttribute("size",  results.getPageable().getPageSize());
         model.addAttribute("number",  results.getPageable().getPageNumber());
@@ -179,6 +180,8 @@ public class BannerMgController {
     public static class SaveBanner{
 
         private Long id;
+
+        @NotBlank(message = "배너를 보여줄 화면을 등록해주세요.")
         private String bannerPath;
         private Long fileTotal;
 

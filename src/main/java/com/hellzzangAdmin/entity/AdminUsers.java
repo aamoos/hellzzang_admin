@@ -73,9 +73,6 @@ public class AdminUsers implements UserDetails {
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
     private Set<AdminAuthority> authorities;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "adminUsers")
-    private Banner banner;
-
     @Override
     public boolean isAccountNonExpired() {
         return true;

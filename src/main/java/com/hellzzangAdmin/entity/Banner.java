@@ -65,12 +65,13 @@ public class Banner {
     private AdminUsers adminUsers;
 
     @Builder
-    public Banner(Long id, String bannerPath, Long fileTotal, AdminUsers adminUsers){
+    public Banner(Long id, String bannerPath, Long fileTotal, AdminUsers adminUsers, String createdDate){
         this.id = id;
         this.bannerPath = bannerPath;
         this.delYn = "N";
         this.fileTotal = fileTotal;
         this.adminUsers = adminUsers;
+        this.createdDate = createdDate;
     }
 
     public Banner delete(){

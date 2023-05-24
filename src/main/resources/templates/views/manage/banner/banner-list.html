@@ -7,6 +7,12 @@
         <div class="container-fluid">
             <input type="hidden" id="number" th:value="${number}" />
             <input type="hidden" id="size" th:value="${size}" />
+
+            <div class="input-group mb-3">
+                <input type="text" id="searchVal" class="form-control" placeholder="검색어를 입력해주세요" aria-label="Recipient's username" aria-describedby="button-addon2" th:value="${searchVal}">
+                <button class="btn btn-outline-secondary" type="button" id="button-addon2" th:onclick="adminBannerList()">검색</button>
+            </div>
+
             <div class="row">
                 <div class="col-lg-12 d-flex align-items-stretch">
                     <div class="card w-100">
@@ -25,6 +31,11 @@
                                         <th class="border-bottom-0">
                                             <h6 class="fw-semibold mb-0">등록자</h6>
                                         </th>
+
+                                        <th class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-0">등록시간</h6>
+                                        </th>
+
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -45,8 +56,12 @@
                                             </td>
 
                                             <td class="border-bottom-0">
+                                                <h6 class="fw-normal"  th:text="${list.createdDate}"></h6>
+                                            </td>
+
+                                            <td class="border-bottom-0">
                                                 <button type="button" class="btn btn-info m-1" th:onclick="|location.href='@{/manage/banner/update/{id}(id=${list.id})}'|">수정</button>
-                                                <button type="button" class="btn btn-danger m-1" th:attr="data-id=${list.id}" th:onclick="bannerUpdate(this)">삭제</button>
+                                                <button type="button" class="btn btn-danger m-1" th:attr="data-id=${list.id}" th:onclick="bannerDelete(this)">삭제</button>
                                             </td>
 
                                         </tr>
@@ -111,16 +126,16 @@
 <script>
 
     //관리자 리스트 조회
-    function adminUserList(){
+    function adminBannerList(){
         let number = document.querySelector('#number').value;
         let searchVal = document.querySelector('#searchVal').value;
         let size = document.querySelector('#size').value;
 
-        location.href = "/manage/adminUser/list?number="+number+"&searchVal="+searchVal+"&size="+size;
+        location.href = "/manage/banner/list?number="+number+"&searchVal="+searchVal+"&size="+size;
     }
 
     //삭제 버튼클릭
-    function bannerUpdate(target) {
+    function bannerDelete(target) {
         console.log(target.getAttribute('data-id'))
         if (confirm("정말로 삭제하시겠습니까?")) {
             const form = document.createElement('form');

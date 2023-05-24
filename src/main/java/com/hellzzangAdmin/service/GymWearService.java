@@ -1,16 +1,16 @@
 package com.hellzzangAdmin.service;
 
-import com.hellzzangAdmin.controller.BannerMgController;
 import com.hellzzangAdmin.controller.GymWearMgController;
-import com.hellzzangAdmin.dto.BannerDto;
 import com.hellzzangAdmin.dto.GymWearDto;
-import com.hellzzangAdmin.dto.QBannerDto;
+import com.hellzzangAdmin.dto.GymWearFileDto;
 import com.hellzzangAdmin.dto.QGymWearDto;
+import com.hellzzangAdmin.dto.QGymWearFileDto;
 import com.hellzzangAdmin.entity.*;
 import com.hellzzangAdmin.repository.AdminUserRepository;
 import com.hellzzangAdmin.repository.FileRepository;
 import com.hellzzangAdmin.repository.GymWearFileRepository;
 import com.hellzzangAdmin.repository.GymWearRepository;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,6 +26,7 @@ import java.util.List;
 import static com.hellzzangAdmin.entity.QAdminUsers.adminUsers;
 import static com.hellzzangAdmin.entity.QBanner.banner;
 import static com.hellzzangAdmin.entity.QGymWear.gymWear;
+import static com.hellzzangAdmin.entity.QGymWearFile.gymWearFile;
 
 /**
  * packageName    : com.hellzzangAdmin.service
@@ -50,17 +51,27 @@ public class GymWearService {
     private final JPAQueryFactory jpaQueryFactory;
 
     /**
+    * @methodName : find
+    * @date : 2023-05-24 오전 9:35
+    * @author : 김재성
+    * @Description: 짐웨어 정보 조회
+    **/
+    public GymWear find(Long id){
+        return gymWearRepository.findById(id).get();
+    }
+
+    /**
      * @methodName : selectBannerList
      * @date : 2023-05-16 오후 1:52
      * @author : 김재성
      * @Description: 배너 페이징 조회
      **/
-    public Page<GymWearDto> selectGymWearList(Pageable pageable){
+    public Page<GymWearDto> selectGymWearList(Pageable pageable, String searchVal){
         //admin 사용자 리스트 조회
-        List<GymWearDto> content = getGymWearList(pageable);
+        List<GymWearDto> content = getGymWearList(pageable, searchVal);
 
         //admin 사용자 total 조회
-        Long count = getCount();
+        Long count = getCount(searchVal);
         return new PageImpl<>(content, pageable, count);
     }
 
@@ -70,7 +81,7 @@ public class GymWearService {
      * @author : 김재성
      * @Description: 배너 리스트 조회
      **/
-    private List<GymWearDto> getGymWearList(Pageable pageable) {
+    private List<GymWearDto> getGymWearList(Pageable pageable, String searchVal) {
 
         List<GymWearDto> content = jpaQueryFactory
                 .select(new QGymWearDto(
@@ -87,6 +98,7 @@ public class GymWearService {
                 .from(gymWear)
                 .innerJoin(adminUsers).on(adminUsers.id.eq(gymWear.adminUsers.id))
                 .where(gymWear.delYn.eq("N"))
+                .where(containsSearch(searchVal))
                 .orderBy(gymWear.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -102,13 +114,14 @@ public class GymWearService {
      * @author : 김재성
      * @Description: 배너 total 조회
      **/
-    private Long getCount(){
+    private Long getCount(String searchVal){
         Long count = jpaQueryFactory
                 .select(gymWear.count())
                 .from(gymWear)
                 .innerJoin(adminUsers).on(adminUsers.id.eq(gymWear.adminUsers.id))
                 .where(adminUsers.id.eq(gymWear.adminUsers.id))
                 .where(gymWear.delYn.eq("N"))
+                .where(containsSearch(searchVal))
                 .fetchOne();
         return count;
     }
@@ -154,4 +167,35 @@ public class GymWearService {
         }
     }
 
+    public List<GymWearFileDto> findGymWearFileList(Long id){
+        List<GymWearFileDto> content = jpaQueryFactory
+                .select(new QGymWearFileDto(
+                        gymWearFile.fileInfo.id
+                        ,gymWearFile.fileInfo.delYn
+                        ,gymWearFile.fileInfo.extension
+                        ,gymWearFile.fileInfo.originFileName
+                        ,gymWearFile.fileInfo.regDate
+                        ,gymWearFile.fileInfo.savedFileName
+                        ,gymWearFile.fileInfo.size
+                        ,gymWearFile.fileInfo.uploadDir
+                ))
+                .from(gymWearFile)
+                .where(gymWearFile.fileInfo.delYn.eq("N"))
+                .where(gymWearFile.gymWearId.eq(id))
+                .orderBy(gymWearFile.id.desc())
+                .fetch();
+
+        return content;
+    }
+
+    @Transactional
+    public Long delete(Long id){
+        GymWear gymWear = gymWearRepository.findById(id).get();
+        gymWear.delete();
+        return gymWear.getId();
+    }
+
+    private BooleanExpression containsSearch(String searchVal){
+        return searchVal != null ? gymWear.title.contains(searchVal) : null;
+    }
 }

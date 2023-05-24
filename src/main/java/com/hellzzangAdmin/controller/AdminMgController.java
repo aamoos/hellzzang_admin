@@ -77,28 +77,6 @@ public class AdminMgController {
     }
 
     /**
-     * @methodName : adminUserUpdate
-     * @date : 2023-05-12 오후 3:57
-     * @author : 김재성
-     * @Description: 관리자 수정 화면
-     **/
-    @GetMapping("/adminUser/update/{id}")
-    public String adminUserUpdate(@PathVariable Long id, Model model){
-        AdminUsers adminUsers = adminUserService.find(id);
-
-        SaveAdminUser saveAdminUser = SaveAdminUser
-                .builder()
-                .id(adminUsers.getId())
-                .userid(adminUsers.getUserid())
-                .username(adminUsers.getUsername())
-                .delYn(adminUsers.getDelYn())
-                .build();
-
-        model.addAttribute("saveAdminUser", saveAdminUser);
-        return "views/manage/adminUser/adminUser-update";
-    }
-
-    /**
      * @methodName : adminUserSaveForm
      * @date : 2023-05-12 오전 9:56
      * @author : 김재성
@@ -130,6 +108,28 @@ public class AdminMgController {
 
         // 검증 통과 시, 사용자 등록 로직 수행
         return "redirect:/manage/adminUser/list";
+    }
+
+    /**
+     * @methodName : adminUserUpdate
+     * @date : 2023-05-12 오후 3:57
+     * @author : 김재성
+     * @Description: 관리자 수정 화면
+     **/
+    @GetMapping("/adminUser/update/{id}")
+    public String adminUserUpdate(@PathVariable Long id, Model model){
+        AdminUsers adminUsers = adminUserService.find(id);
+
+        SaveAdminUser saveAdminUser = SaveAdminUser
+                .builder()
+                .id(adminUsers.getId())
+                .userid(adminUsers.getUserid())
+                .username(adminUsers.getUsername())
+                .delYn(adminUsers.getDelYn())
+                .build();
+
+        model.addAttribute("saveAdminUser", saveAdminUser);
+        return "views/manage/adminUser/adminUser-update";
     }
 
     @PostMapping("/adminUser/update/{id}")

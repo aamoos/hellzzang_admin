@@ -8,6 +8,13 @@
             <div class="container-fluid">
                 <input type="hidden" id="number" th:value="${number}" />
                 <input type="hidden" id="size" th:value="${size}" />
+
+                <div class="input-group mb-3">
+                    <input type="text" id="searchVal" class="form-control" placeholder="검색어를 입력해주세요" aria-label="Recipient's username" aria-describedby="button-addon2" th:value="${searchVal}">
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2" th:onclick="gymWearList()">검색</button>
+                </div>
+
+
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
@@ -16,18 +23,19 @@
                             </div>
 
                             <div class="col-md-12" th:if="${totalCount == 0}">
-                                <h1>조회된 리스트가 없습니다.</h1>
+                                조회된 리스트가 없습니다.
                             </div>
 
                             <div class="col-md-4" th:each="list, userStat : ${list}">
                                 <div class="card">
-                                    <img th:src="@{/thumbnail/{id}(id=${list.thumbnailIdx})}" class="card-img-top" alt="...">
+                                    <img th:src="@{/thumbnail/{id}(id=${list.thumbnailIdx})}" class="card-img-top" alt="..." th:onerror="this.src='/assets/images/products/s4.jpg'">
                                     <div class="card-body">
                                         <h5 class="card-title" th:text="${list.title}">Card title</h5>
                                         <pre class="card-text" th:text="${#strings.length(list.contentsText) &gt; 20 ? #strings.substring(list.contentsText, 0, 20) + '...' : list.contentsText}">Some quick example text to build on the card title and make up the bulk of
                                             the
                                             card's content.</pre>
-                                        <a href="#" class="btn btn-primary">상세보기</a>
+                                        <a th:href="@{/manage/gymWear/update/{id}(id=${list.id})}" class="btn btn-primary">수정</a>
+                                        <a class="btn btn-danger" th:attr="data-id=${list.id}" th:onclick="gymWearDelete(this)">삭제</a>
                                     </div>
                                 </div>
                             </div>
@@ -84,3 +92,34 @@
     </div>
 </th:block>
 </html>
+
+<script>
+    //관리자 리스트 조회
+    function gymWearList(){
+        let number = document.querySelector('#number').value;
+        let searchVal = document.querySelector('#searchVal').value;
+        let size = document.querySelector('#size').value;
+
+        location.href = "/manage/gymWear/list?number="+number+"&searchVal="+searchVal+"&size="+size;
+    }
+
+    //짐웨어 삭제
+    function gymWearDelete(target){
+         console.log(target.getAttribute('data-id'))
+        if (confirm("정말로 삭제하시겠습니까?")) {
+            const form = document.createElement('form');
+            form.setAttribute('method', 'post');        //Post 메소드 적용
+            form.setAttribute('action', '/manage/gymWear/delete');
+
+            let input1 = document.createElement('input');
+            input1.setAttribute("type", "hidden");
+            input1.setAttribute("name", "id");
+            input1.setAttribute("value", target.getAttribute('data-id'));
+
+            form.appendChild(input1);
+            console.log(form);
+            document.body.appendChild(form);
+            form.submit();
+        }
+    }
+</script>

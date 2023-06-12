@@ -61,6 +61,7 @@ public class SecurityConfig {
         http.csrf().disable()            //csrf 토큰을 비활성화
                 .authorizeRequests()        //요청 URL에 따라 접근 권한을 설정
                 .antMatchers("/auth/**").permitAll()
+                .antMatchers("/thumbnail/**").permitAll()
                 .anyRequest()                //다른 모든 요청
                 .authenticated()            //인증된 유저만 접근을 허용
                 .and()

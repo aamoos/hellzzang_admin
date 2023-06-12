@@ -93,7 +93,8 @@ public class GymWearService {
                         gymWear.createdDate,
                         gymWear.modifiedDate,
                         gymWear.thumbnailIdx,
-                        gymWear.delYn
+                        gymWear.delYn,
+                        gymWear.price
                 ))
                 .from(gymWear)
                 .innerJoin(adminUsers).on(adminUsers.id.eq(gymWear.adminUsers.id))
@@ -140,6 +141,7 @@ public class GymWearService {
                 .contentsText(saveGymWear.getContents().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", ""))
                 .adminUsers(adminUsers)
                 .thumbnailIdx(saveGymWear.getThumbnailIdx())
+                .price(saveGymWear.getPrice())
                 .build();
 
         Long gymWearId = gymWearRepository.save(gymWear).getId();
@@ -196,6 +198,6 @@ public class GymWearService {
     }
 
     private BooleanExpression containsSearch(String searchVal){
-        return searchVal != null ? gymWear.title.contains(searchVal) : null;
+        return searchVal != null && !searchVal.equals("") ? gymWear.title.contains(searchVal) : null;
     }
 }

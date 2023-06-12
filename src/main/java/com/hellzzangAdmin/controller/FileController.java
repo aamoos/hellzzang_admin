@@ -33,7 +33,6 @@ import java.util.List;
 public class FileController {
 
     private final FileService fileService;
-    private final FileRepository fileRepository;
 
     /** 단일 파일업로드
      * @throws Exception */

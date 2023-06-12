@@ -13,9 +13,7 @@ import com.hellzzangAdmin.repository.AdminUserRepository;
 import com.hellzzangAdmin.repository.BannerFileRepository;
 import com.hellzzangAdmin.repository.BannerRepository;
 import com.hellzzangAdmin.repository.FileRepository;
-import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -31,7 +29,6 @@ import java.util.List;
 import static com.hellzzangAdmin.entity.QAdminUsers.adminUsers;
 import static com.hellzzangAdmin.entity.QBanner.banner;
 import static com.hellzzangAdmin.entity.QBannerFile.bannerFile;
-import static com.querydsl.core.types.ExpressionUtils.count;
 
 /**
  * packageName    : com.hellzzangAdmin.service
@@ -167,6 +164,7 @@ public class BannerService {
                 .id(saveBanner.getId())
                 .bannerPath(saveBanner.getBannerPath())
                 .fileTotal(saveBanner.getFileTotal())
+                .adminUsers(adminUsers)
                 .build();
 
         Long bannerId = bannerRepository.save(banner).getId();
@@ -201,6 +199,6 @@ public class BannerService {
     }
 
     private BooleanExpression containsSearch(String searchVal){
-        return searchVal != null ? banner.bannerPath.contains(searchVal) : null;
+        return searchVal != null && !searchVal.equals("") ? banner.bannerPath.contains(searchVal) : null;
     }
 }

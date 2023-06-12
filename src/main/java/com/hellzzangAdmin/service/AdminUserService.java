@@ -132,6 +132,6 @@ public class AdminUserService {
     }
 
     private BooleanExpression containsSearch(String searchVal){
-        return searchVal != null ? adminUsers.username.contains(searchVal) : null;
+        return searchVal != null && !searchVal.equals("") ? adminUsers.username.contains(searchVal) : null;
     }
 }

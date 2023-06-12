@@ -50,8 +50,10 @@ public class GymWearDto {
 
     private String delYn;
 
+    private Long price;
+
     @QueryProjection
-    public GymWearDto(Long id, String title, String contents, String contentsText, String regUserName, String createdDate, String modifiedDate, Long thumbnailIdx, String delYn) {
+    public GymWearDto(Long id, String title, String contents, String contentsText, String regUserName, String createdDate, String modifiedDate, Long thumbnailIdx, String delYn, Long price) {
         this.id = id;
         this.title = title;
         this.contents = contents;
@@ -61,6 +63,7 @@ public class GymWearDto {
         this.modifiedDate = modifiedDate;
         this.thumbnailIdx = thumbnailIdx;
         this.delYn = delYn;
+        this.price = price;
     }
 
 }

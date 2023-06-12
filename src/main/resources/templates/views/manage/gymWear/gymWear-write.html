@@ -41,6 +41,12 @@
                                 </div>
 
                                 <div class="mb-3">
+                                    <label for="title" class="form-label">가격</label>
+                                    <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" class="form-control" id="price" th:field="*{price}" th:value="${saveGymWear.price}" aria-describedby="emailHelp">
+                                    <small id="valid_price" class="form-text text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></small>
+                                </div>
+
+                                <div class="mb-3">
                                     <!-- 드롭존 - 클릭영역 -->
                                     <div class="dropzone"></div>
 <!--                                    <small id="valid_thumbnailIdx" class="form-text text-danger" th:if="${#fields.hasErrors('thumbnailIdx')}" th:errors="*{thumbnailIdx}"></small>-->

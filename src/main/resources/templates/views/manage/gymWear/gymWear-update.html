@@ -31,7 +31,6 @@
                                 <input type="hidden" id="contentFileIdx" name="contentFileIdx" />
                                 <div class="mb-3">
                                     <label for="title" class="form-label">제목</label>
-
                                     <input type="text" class="form-control" id="title" th:field="*{title}" th:value="${saveGymWear.title}" aria-describedby="emailHelp">
                                     <small id="valid_title" class="form-text text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></small>
                                 </div>
@@ -41,6 +40,12 @@
                                     <textarea class="form-control" id="summernote" th:field="*{contents}" rows="3" aria-describedby="valid_content" th:text="${saveGymWear.contents}"></textarea>
                                     <div style="text-align: right;" class="count"><span id="contentLength">0</span>/1900</div>
                                     <small id="valid_contents" class="form-text text-danger" th:if="${#fields.hasErrors('contents')}" th:errors="*{contents}"></small>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="title" class="form-label">가격</label>
+                                    <input type="text" class="form-control" id="price" th:field="*{price}" th:value="${saveGymWear.price}" aria-describedby="emailHelp">
+                                    <small id="valid_price" class="form-text text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></small>
                                 </div>
 
                                 <div class="mb-3">

@@ -117,6 +117,7 @@ public class GymWearMgController {
                 .title(gymWear.getTitle())
                 .contents(gymWear.getContents())
                 .thumbnailIdx(gymWear.getThumbnailIdx())
+                .price(gymWear.getPrice())
                 .build();
 
         //짐웨어 파일 리스트 조회
@@ -176,13 +177,18 @@ public class GymWearMgController {
 
         private List<Long> contentFileIdx;
 
+        @NotNull(message = "가격은 0원 보다 크게 작성해야 합니다.")
+        @Min(value = 1, message = "가격은 0원 보다 크게 작성해야 합니다.")
+        private Long price;     //가격
+
         @Builder
-        public SaveGymWear(Long id, String title, String contents, Long thumbnailIdx, List<Long> contentFileIdx){
+        public SaveGymWear(Long id, String title, String contents, Long thumbnailIdx, List<Long> contentFileIdx, Long price){
             this.id = id;
             this.title = title;
             this.contents = contents;
             this.thumbnailIdx = thumbnailIdx;
             this.contentFileIdx = contentFileIdx;
+            this.price = price;
         }
     }
 }

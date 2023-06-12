@@ -67,8 +67,10 @@ public class GymWear {
 
     private String delYn;
 
+    private Long price;
+
     @Builder
-    public GymWear(Long id, String title, String contents, String contentsText, AdminUsers adminUsers, Long thumbnailIdx, String delYn){
+    public GymWear(Long id, String title, String contents, String contentsText, AdminUsers adminUsers, Long thumbnailIdx, String delYn, Long price){
         this.id = id;
         this.title = title;
         this.contents = contents;
@@ -76,6 +78,7 @@ public class GymWear {
         this.adminUsers = adminUsers;
         this.thumbnailIdx = thumbnailIdx;
         this.delYn = "N";
+        this.price = price;
     }
 
     public GymWear delete(){

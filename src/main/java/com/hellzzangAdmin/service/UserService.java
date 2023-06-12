@@ -62,7 +62,7 @@ public class UserService {
         return content;
     }
     private BooleanExpression containsSearch(String searchVal){
-        return searchVal != null ? user.username.contains(searchVal) : null;
+        return searchVal != null && !searchVal.equals("") ? user.username.contains(searchVal) : null;
     }
 
     /**

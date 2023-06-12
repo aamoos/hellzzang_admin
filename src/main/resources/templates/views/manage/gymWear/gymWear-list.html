@@ -34,6 +34,7 @@
                                         <pre class="card-text" th:text="${#strings.length(list.contentsText) &gt; 20 ? #strings.substring(list.contentsText, 0, 20) + '...' : list.contentsText}">Some quick example text to build on the card title and make up the bulk of
                                             the
                                             card's content.</pre>
+                                        <h5 class="card-title">[[${list.price}]]원</h5>
                                         <a th:href="@{/manage/gymWear/update/{id}(id=${list.id})}" class="btn btn-primary">수정</a>
                                         <a class="btn btn-danger" th:attr="data-id=${list.id}" th:onclick="gymWearDelete(this)">삭제</a>
                                     </div>
@@ -53,14 +54,14 @@
                 <ul class="pagination">
 
                     <li th:if="${start > 1}" class="page-item">
-                        <a th:href="@{/manage/adminUser/list?(page=0, searchVal=${searchVal})}" class="page-link" href="#"
+                        <a th:href="@{/manage/gymWear/list?(page=0, searchVal=${searchVal})}" class="page-link" href="#"
                            aria-label="Previous">
                             <span aria-hidden="true">&laquo;&laquo;</span>
                         </a>
                     </li>
 
                     <li th:if="${start > 1}" class="page-item">
-                        <a th:href="@{/manage/adminUser/list?(page=${start - maxPage-1}, searchVal=${searchVal})}" class="page-link" href="#"
+                        <a th:href="@{/manage/gymWear/list?(page=${start - maxPage-1}, searchVal=${searchVal})}" class="page-link" href="#"
                            aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
@@ -68,19 +69,19 @@
 
                     <li th:each="page: ${#numbers.sequence(start, end)}" class="page-item"
                         th:classappend="${list.number+1 == page} ? active">
-                        <a th:href="@{/manage/adminUser/list?(page=${page-1}, searchVal=${searchVal})}" th:text="${page}" class="page-link"
+                        <a th:href="@{/manage/gymWear/list?(page=${page-1}, searchVal=${searchVal})}" th:text="${page}" class="page-link"
                            href="#">1</a>
                     </li>
 
                     <li th:if="${end < list.totalPages}" class="page-item">
-                        <a th:href="@{/manage/adminUser/list?(page=${start + maxPage -1}, searchVal=${searchVal})}" class="page-link"
+                        <a th:href="@{/manage/gymWear/list?(page=${start + maxPage -1}, searchVal=${searchVal})}" class="page-link"
                            href="#" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
 
                     <li th:if="${end < list.totalPages}" class="page-item">
-                        <a th:href="@{/manage/adminUser/list?(page=${list.totalPages-1}, searchVal=${searchVal})}" class="page-link" href="#"
+                        <a th:href="@{/manage/gymWear/list?(page=${list.totalPages-1}, searchVal=${searchVal})}" class="page-link" href="#"
                            aria-label="Next">
                             <span aria-hidden="true">&raquo;&raquo;</span>
                         </a>

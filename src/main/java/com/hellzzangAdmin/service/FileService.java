@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.InetAddress;
 import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -82,7 +83,8 @@ public class FileService {
                     fileInfo = fileRepository.save(fileDto.toEntity());
 
                     //썸네일 url 설정
-                    fileInfo.updateUrl("/thumbnail/"+fileInfo.getId());
+//                    fileInfo.updateUrl("http://localhost:8280/thumbnail/"+fileInfo.getId());
+                    fileInfo.updateUrl("http://192.168.0.39:8080/"+fileInfo.getId());
 
                     try {
                         InputStream fileStream = multipartFile.getInputStream();

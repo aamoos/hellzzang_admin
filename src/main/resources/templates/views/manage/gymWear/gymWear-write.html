@@ -168,7 +168,7 @@
 
                         $(".note-editable").find("img").each(function(){
                             let src = $(this).attr("src");
-                            let fIdx = src.split("/")[2];
+                            let fIdx = src.split("/")[4];
                             contentFileIdx.push(Number(fIdx));
                         });
 
@@ -284,7 +284,10 @@
                     console.log(data);
                     console.log(editor);
                     data.url = data.url;
-                    $('#summernote').summernote("insertImage",data.url);
+                    var image = $('<img>').attr('src',  data.url);
+                    image.attr('width','350px');
+
+                     $('#summernote').summernote("insertNode", image[0]);
                 }
             });
         }

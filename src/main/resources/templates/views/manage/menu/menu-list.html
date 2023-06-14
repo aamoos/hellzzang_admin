@@ -15,7 +15,7 @@
                                     <thead class="text-dark fs-4">
                                     <tr>
                                         <th class="border-bottom-0">
-                                            <h6 class="fw-semibold mb-0">화면명</h6>
+                                            <h6 class="fw-semibold mb-0">메뉴명</h6>
                                         </th>
                                         <th class="border-bottom-0">
                                             <h6 class="fw-semibold mb-0">카테고리명</h6>
@@ -29,6 +29,25 @@
                                     </tr>
                                     </thead>
                                     <tbody>
+                                    <tr th:each="list : ${commuList}">
+                                        <td class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-1" th:text="${list.name}"></h6>
+                                        </td>
+
+                                        <td class="border-bottom-0">
+                                            <span class="fw-normal">오늘의식단,나만의노하우,자유게시판,커뮤4</span>
+                                        </td>
+
+                                        <td class="border-bottom-0">
+                                            <span class="fw-normal">4개</span>
+                                        </td>
+
+                                        <td class="border-bottom-0">
+                                            <h6 class="fw-normal">김재성</h6>
+                                        </td>
+                                    </tr>
+
+
                                     <tr>
                                         <td class="border-bottom-0">
                                             <h6 class="fw-semibold mb-1">나만의운동</h6>

@@ -51,11 +51,11 @@ public class GymWearService {
     private final JPAQueryFactory jpaQueryFactory;
 
     /**
-    * @methodName : find
-    * @date : 2023-05-24 오전 9:35
-    * @author : 김재성
-    * @Description: 짐웨어 정보 조회
-    **/
+     * @methodName : find
+     * @date : 2023-05-24 오전 9:35
+     * @author : 김재성
+     * @Description: 짐웨어 정보 조회
+     **/
     public GymWear find(Long id){
         return gymWearRepository.findById(id).get();
     }

@@ -1,5 +1,6 @@
 package com.hellzzangAdmin.authentication;
 
+import com.hellzzangAdmin.common.CustomUserDetails;
 import com.hellzzangAdmin.entity.AdminUsers;
 import com.hellzzangAdmin.repository.AdminUserRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,11 +34,8 @@ public class UserDetailService implements UserDetailsService {
             throw  new UsernameNotFoundException("해당 사용자가 존재하지 않습니다.");
         }
 
-        return new org.springframework.security.core.userdetails.User(
-                adminUser.getUsername(),
-                adminUser.getPassword(),
-                adminUser.getAuthorities()
-        );
+        return new CustomUserDetails(adminUser.getUsername(), adminUser.getPassword(), adminUser.getAuthorities(), adminUser.getId());
+
     }
 
 

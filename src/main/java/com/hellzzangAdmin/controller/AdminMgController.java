@@ -120,8 +120,7 @@ public class AdminMgController {
     public String adminUserUpdate(@PathVariable Long id, Model model){
         AdminUsers adminUsers = adminUserService.find(id);
 
-        SaveAdminUser saveAdminUser = SaveAdminUser
-                .builder()
+        SaveAdminUser saveAdminUser = SaveAdminUser.builder()
                 .id(adminUsers.getId())
                 .userid(adminUsers.getUserid())
                 .username(adminUsers.getUsername())

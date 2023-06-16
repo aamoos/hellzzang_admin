@@ -120,13 +120,9 @@ public class GymWearMgController {
                 .price(gymWear.getPrice())
                 .build();
 
-        //짐웨어 파일 리스트 조회
-        List<GymWearFileDto> gymWearFile = gymWearService.findGymWearFileList(id);
-
         model.addAttribute("saveGymWear", saveGymWear);
-        model.addAttribute("gymWearFile", gymWearFile);
 
-        //썸네일이 등록된경우에만 model
+//        //썸네일이 등록된경우에만 model
         if(saveGymWear.thumbnailIdx != null){
             model.addAttribute("fileInfo", fileRepository.findById(saveGymWear.thumbnailIdx).get());
         }

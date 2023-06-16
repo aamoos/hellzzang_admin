@@ -82,7 +82,7 @@ public class BannerService {
                 ))
                 .from(bannerFile)
                 .where(bannerFile.fileInfo.delYn.eq("N"))
-                .where(bannerFile.bannerId.eq(id))
+                .where(bannerFile.banner.id.eq(id))
                 .orderBy(bannerFile.id.desc())
                 .fetch();
 
@@ -159,6 +159,11 @@ public class BannerService {
         HttpSession session = request.getSession(true);
         AdminUsers adminUsers = adminUserRepository.findById((Long) session.getAttribute("id")).get();
 
+        //기존에 등록된 파일 전부 삭제
+        if(saveBanner.getId() != null){
+            bannerFileRepository.deleteByBannerId(saveBanner.getId());
+        }
+
         //banner 테이블 저장
         Banner banner = Banner.builder()
                 .id(saveBanner.getId())
@@ -166,13 +171,6 @@ public class BannerService {
                 .fileTotal(saveBanner.getFileTotal())
                 .adminUsers(adminUsers)
                 .build();
-
-        Long bannerId = bannerRepository.save(banner).getId();
-
-        //기존에 등록된 파일 전부 삭제
-        if(saveBanner.getId() != null){
-            bannerFileRepository.deleteByBannerId(saveBanner.getId());
-        }
 
         //banner_file 테이블 저장
         List<Long> fileIdxList = saveBanner.getFileIdxList();
@@ -184,11 +182,12 @@ public class BannerService {
 
             BannerFile bannerFile = BannerFile.builder()
                     .fileInfo(fileInfo)
-                    .bannerId(bannerId)
+                    .banner(banner)
                     .build();
-            bannerFileRepository.save(bannerFile);
+            banner.addBannerFiles(bannerFile);
             index++;
         }
+        bannerRepository.save(banner);
     }
 
     @Transactional

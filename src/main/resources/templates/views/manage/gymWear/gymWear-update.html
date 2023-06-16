@@ -24,9 +24,8 @@
                     <h5 class="card-title fw-semibold mb-4">짐웨어&장비 등록</h5>
                     <div class="card">
                         <div class="card-body">
-
-                            <form id="gymWearForm" th:action="@{'/manage/gymWear/update/' + *{id}}" th:object="${saveGymWear}" method="post">
-                                <input type="hidden" id="id" name="id" th:value="*{id}"/>
+                            <form id="gymWearForm" th:action="@{/manage/gymWear/update/{id}(id=${saveGymWear.id})}" th:object="${saveGymWear}" method="post">
+                                <input type="hidden" id="id" name="id" th:value="${saveGymWear.id}"/>
                                 <input type="hidden" id="thumbnailIdx" name="thumbnailIdx" th:value="*{thumbnailIdx}"/>
                                 <input type="hidden" id="contentFileIdx" name="contentFileIdx" />
                                 <div class="mb-3">

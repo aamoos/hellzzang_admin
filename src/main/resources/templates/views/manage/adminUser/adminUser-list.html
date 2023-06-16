@@ -57,7 +57,7 @@
                                             </td>
 
                                             <td class="border-bottom-0" >
-                                                <h6 class="fw-normal" th:text="${#temporals.format(list.regDate, 'YYYY-MM-dd')}">2023-05-11</h6>
+                                                <h6 class="fw-normal" th:text="${list.createdDate}">2023-05-11</h6>
                                             </td>
                                             <td class="border-bottom-0">
                                                 <button type="button" class="btn btn-info m-1" th:onclick="|location.href='@{/manage/adminUser/update/{id}(id=${list.id})}'|">수정</button>

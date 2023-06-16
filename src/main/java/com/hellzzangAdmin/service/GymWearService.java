@@ -144,8 +144,6 @@ public class GymWearService {
                 .price(saveGymWear.getPrice())
                 .build();
 
-        Long gymWearId = gymWearRepository.save(gymWear).getId();
-
         //기존에 등록된 파일 전부 삭제
         if(gymWear.getId() != null){
             gymWearFileRepository.deleteByGymWearId(saveGymWear.getId());
@@ -161,12 +159,14 @@ public class GymWearService {
 
             GymWearFile gymWearFile = GymWearFile.builder()
                     .fileInfo(fileInfo)
-                    .gymWearId(gymWearId)
+                    .gymWear(gymWear)
                     .build();
-
-            gymWearFileRepository.save(gymWearFile);
+            gymWear.addGymWearFile(gymWearFile);
             index++;
         }
+
+        //저장
+        gymWearRepository.save(gymWear);
     }
 
     public List<GymWearFileDto> findGymWearFileList(Long id){
@@ -183,7 +183,7 @@ public class GymWearService {
                 ))
                 .from(gymWearFile)
                 .where(gymWearFile.fileInfo.delYn.eq("N"))
-                .where(gymWearFile.gymWearId.eq(id))
+                .where(gymWearFile.gymWear.id.eq(id))
                 .orderBy(gymWearFile.id.desc())
                 .fetch();
 

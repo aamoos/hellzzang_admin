@@ -5,19 +5,17 @@ import com.querydsl.core.annotations.QueryProjection;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.LocalDateTime;
 
 /**
  * packageName    : com.hellzzangAdmin.dto
  * fileName       : AdminUserDto
  * author         : 김재성
  * date           : 2023-05-12
- * description    :
+ * description    : 관리자 사용자 select dto
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------

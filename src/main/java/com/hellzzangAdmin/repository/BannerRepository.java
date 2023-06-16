@@ -10,7 +10,7 @@ import java.util.List;
  * fileName       : BannerRepository
  * author         : 김재성
  * date           : 2023-05-16
- * description    :
+ * description    : 배너 repository
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------

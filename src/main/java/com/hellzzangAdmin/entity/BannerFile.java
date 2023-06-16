@@ -7,14 +7,13 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.servlet.http.HttpSession;
 
 /**
  * packageName    : com.hellzzangAdmin.entity
  * fileName       : BannerFile
  * author         : 김재성
  * date           : 2023-05-17
- * description    :
+ * description    : 배너 파일 entity
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------

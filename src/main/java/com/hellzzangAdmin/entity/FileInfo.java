@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
  * fileName       : File
  * author         : 김재성
  * date           : 2023-05-11
- * description    :
+ * description    : 파일 entity
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------

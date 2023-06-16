@@ -1,23 +1,18 @@
 package com.hellzzangAdmin.dto;
 
-import com.hellzzangAdmin.entity.AdminUsers;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 /**
  * packageName    : com.hellzzangAdmin.dto
  * fileName       : BannerDto
  * author         : 김재성
  * date           : 2023-05-16
- * description    :
+ * description    : 짐웨어 dto
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------

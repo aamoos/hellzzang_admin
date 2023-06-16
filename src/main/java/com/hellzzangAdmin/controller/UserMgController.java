@@ -7,12 +7,9 @@ import com.hellzzangAdmin.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -20,7 +17,7 @@ import java.util.List;
  * fileName       : MemberManageController
  * author         : 김재성
  * date           : 2023-05-15
- * description    :
+ * description    : 사용자 관리 controller
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------

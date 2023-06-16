@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  * fileName       : PersistentLogins
  * author         : 김재성
  * date           : 2023-05-11
- * description    :
+ * description    : 자동 로그인 entity
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------

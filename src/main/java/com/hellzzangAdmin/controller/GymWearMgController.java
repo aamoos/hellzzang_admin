@@ -1,11 +1,6 @@
 package com.hellzzangAdmin.controller;
 
-import com.hellzzangAdmin.dto.BannerDto;
-import com.hellzzangAdmin.dto.BannerFileDto;
 import com.hellzzangAdmin.dto.GymWearDto;
-import com.hellzzangAdmin.dto.GymWearFileDto;
-import com.hellzzangAdmin.entity.Banner;
-import com.hellzzangAdmin.entity.FileInfo;
 import com.hellzzangAdmin.entity.GymWear;
 import com.hellzzangAdmin.repository.FileRepository;
 import com.hellzzangAdmin.service.GymWearService;
@@ -18,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import javax.persistence.Column;
 import javax.persistence.Lob;
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +20,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 import java.util.List;
 
 /**
@@ -74,7 +67,7 @@ public class GymWearMgController {
      * @methodName : gymWearSave
      * @date : 2023-05-11 오후 3:52
      * @author : 김재성
-     * @Description: 짐웨어 등록화면
+     * @Description: 짐웨어 등록 화면
      **/
     @GetMapping("/gymWear/write")
     public String write(Model model){
@@ -86,7 +79,7 @@ public class GymWearMgController {
     * @methodName : write
     * @date : 2023-05-24 오전 9:34
     * @author : 김재성
-    * @Description: 짐웨어 등록
+    * @Description: 짐웨어 등록 submit
     **/
     @PostMapping("/gymWear/write")
     public String write(@Valid SaveGymWear saveGymWear, BindingResult result, HttpServletRequest request){
@@ -104,7 +97,7 @@ public class GymWearMgController {
     * @methodName : update
     * @date : 2023-05-24 오전 9:59
     * @author : 김재성
-    * @Description: 짐웨어 업데이트
+    * @Description: 짐웨어 수정 화면
     **/
     @GetMapping("/gymWear/update/{id}")
     public String update(@PathVariable Long id, Model model){
@@ -134,7 +127,7 @@ public class GymWearMgController {
     * @methodName : update
     * @date : 2023-05-24 오전 10:04
     * @author : 김재성
-    * @Description: 짐웨어 업데이트
+    * @Description: 짐웨어 수정 submit
     **/
     @PostMapping("/gymWear/update/{id}")
     public String update(@Valid SaveGymWear saveGymWear, BindingResult result, HttpServletRequest request){
@@ -148,6 +141,12 @@ public class GymWearMgController {
         return "redirect:/manage/gymWear/list";
     }
 
+    /**
+    * @methodName : gymWearDelete
+    * @date : 2023-06-17 오전 12:00
+    * @author : 김재성
+    * @Description: 짐웨어 삭제 submit
+    **/
     @PostMapping("/gymWear/delete")
     public String gymWearDelete(@RequestParam Long id) {
         gymWearService.delete(id);
@@ -155,6 +154,12 @@ public class GymWearMgController {
         return "redirect:/manage/gymWear/list";
     }
 
+    /**
+    * @methodName :
+    * @date : 2023-06-17 오전 12:00
+    * @author : 김재성
+    * @Description: 짐웨어 저장 dto
+    **/
     @Data
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class SaveGymWear{

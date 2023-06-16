@@ -1,12 +1,13 @@
 package com.hellzzangAdmin.dto;
 
+import com.hellzzangAdmin.entity.Banner;
+import com.hellzzangAdmin.entity.FileInfo;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
  * fileName       : BannerDto
  * author         : 김재성
  * date           : 2023-05-16
- * description    :
+ * description    : 배너 파일 select dto
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
@@ -26,35 +27,21 @@ import java.time.LocalDateTime;
 public class BannerFileDto {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String contentType;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "file_id")
+    private FileInfo fileInfo;
 
-    private String delYn;
-
-    private String extension;
-
-    private String originFileName;
-
-    private LocalDateTime regDate;
-
-    private String savedFileName;
-
-    private Long size;
-
-    private String uploadDir;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "banner_id")
+    private Banner banner;
 
     @QueryProjection
-    public BannerFileDto(Long id, String delYn, String extension, String originFileName,LocalDateTime regDate, String savedFileName, Long size, String uploadDir) {
+    public BannerFileDto(Long id, FileInfo fileInfo) {
         this.id = id;
-        this.delYn = delYn;
-        this.extension = extension;
-        this.originFileName = originFileName;
-        this.regDate = regDate;
-        this.savedFileName = savedFileName;
-        this.size = size;
-        this.uploadDir = uploadDir;
+        this.fileInfo = fileInfo;
     }
 
 }

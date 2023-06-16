@@ -2,7 +2,6 @@ package com.hellzzangAdmin.common;
 
 import com.google.gson.JsonObject;
 import org.springframework.http.MediaType;
-
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,7 +11,7 @@ import java.io.PrintWriter;
  * fileName       : CoTopComponent
  * author         : 김재성
  * date           : 2023-05-10
- * description    :
+ * description    : 로그인쪽에 response할때 사용되는 component
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------

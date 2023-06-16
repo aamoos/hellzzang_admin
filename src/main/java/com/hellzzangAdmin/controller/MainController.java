@@ -21,6 +21,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequiredArgsConstructor
 @Slf4j
 public class MainController {
+
+    /**
+    * @methodName : list
+    * @date : 2023-06-17 오전 12:00
+    * @author : 김재성
+    * @Description: 대시보드 (지금은 사용안함) 나중에 사용할수도 있어서 놔둠
+    **/
     @GetMapping("/")
     public String list(String searchVal){
         return "views/main/dashboard";

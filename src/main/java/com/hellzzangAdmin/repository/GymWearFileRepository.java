@@ -1,6 +1,5 @@
 package com.hellzzangAdmin.repository;
 
-import com.hellzzangAdmin.entity.BannerFile;
 import com.hellzzangAdmin.entity.GymWearFile;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -9,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * fileName       : BannerRepository
  * author         : 김재성
  * date           : 2023-05-16
- * description    :
+ * description    : 짐웨어 파일 repository
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------

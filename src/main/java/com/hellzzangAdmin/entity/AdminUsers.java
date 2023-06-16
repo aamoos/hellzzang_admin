@@ -19,7 +19,13 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-//UserService에서 설정
+/**
+* @package : com.hellzzangAdmin.entity
+* @name : AdminUsers.java
+* @date : 2023-06-17 오전 12:21
+* @author : 김재성
+* @Description: 괸리자 entity
+**/
 @Entity
 @Getter
 @Setter

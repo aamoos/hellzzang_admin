@@ -35,7 +35,7 @@ import static com.hellzzangAdmin.entity.QBannerFile.bannerFile;
  * fileName       : BannerService
  * author         : 김재성
  * date           : 2023-05-16
- * description    :
+ * description    : 배너 service
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
@@ -72,13 +72,7 @@ public class BannerService {
         List<BannerFileDto> content = jpaQueryFactory
                 .select(new QBannerFileDto(
                          bannerFile.fileInfo.id
-                        ,bannerFile.fileInfo.delYn
-                        ,bannerFile.fileInfo.extension
-                        ,bannerFile.fileInfo.originFileName
-                        ,bannerFile.fileInfo.regDate
-                        ,bannerFile.fileInfo.savedFileName
-                        ,bannerFile.fileInfo.size
-                        ,bannerFile.fileInfo.uploadDir
+                        ,bannerFile.fileInfo
                 ))
                 .from(bannerFile)
                 .where(bannerFile.fileInfo.delYn.eq("N"))
@@ -118,12 +112,11 @@ public class BannerService {
                         banner.bannerPath,
                         banner.delYn,
                         banner.adminUsers.id,
-                        adminUsers.username,
+                        banner.adminUsers.username,
                         banner.fileTotal,
                         banner.createdDate
                 ))
                 .from(banner)
-                .innerJoin(adminUsers).on(adminUsers.id.eq(banner.adminUsers.id))
                 .where(banner.delYn.eq("N"))
                 .where(containsSearch(searchVal))
                 .orderBy(banner.id.desc())
@@ -132,7 +125,6 @@ public class BannerService {
                 .fetch();
 
         return content;
-//        return null;
     }
 
     /**
@@ -145,9 +137,7 @@ public class BannerService {
         Long count = jpaQueryFactory
                 .select(banner.count())
                 .from(banner)
-                .innerJoin(adminUsers).on(adminUsers.id.eq(banner.adminUsers.id))
                 .where(containsSearch(searchVal))
-                .where(adminUsers.id.eq(banner.adminUsers.id))
                 .where(banner.delYn.eq("N"))
                 .fetchOne();
         return count;
@@ -184,6 +174,8 @@ public class BannerService {
                     .fileInfo(fileInfo)
                     .banner(banner)
                     .build();
+
+            //파일 리스트 add
             banner.addBannerFiles(bannerFile);
             index++;
         }

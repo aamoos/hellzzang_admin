@@ -13,7 +13,7 @@ import javax.persistence.*;
  * fileName       : BannerFile
  * author         : 김재성
  * date           : 2023-05-17
- * description    :
+ * description    : 짐웨어 파일 entity
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------

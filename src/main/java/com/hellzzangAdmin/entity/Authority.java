@@ -7,7 +7,14 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-//UserService에서 설정
+/**
+* @package : com.hellzzangAdmin.entity
+* @name : Authority.java
+* @date : 2023-06-17 오전 12:21
+* @author : 김재성
+* @Description: 사용자 권한 entity
+**/
+
 @Entity
 @Table(name = "authority")
 @Getter

@@ -28,7 +28,7 @@ import java.util.List;
  * fileName       : AdminMgController
  * author         : 김재성
  * date           : 2023-05-15
- * description    :
+ * description    : 관리자 사용자 controller
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
@@ -80,7 +80,7 @@ public class AdminMgController {
      * @methodName : adminUserSaveForm
      * @date : 2023-05-12 오전 9:56
      * @author : 김재성
-     * @Description: 관리자 등록
+     * @Description: 관리자 등록 submit
      **/
     @PostMapping("/adminUser/write")
     public String adminUserWriteForm(@Valid SaveAdminUser saveAdminUser, BindingResult result) {
@@ -96,9 +96,7 @@ public class AdminMgController {
         }
 
         //아이디 중복체크
-        AdminUsers adminUsers = adminUserRepository.findByUserid(saveAdminUser.getUserid());
-
-        if(adminUsers != null){
+        if(adminUserRepository.findByUserid(saveAdminUser.getUserid()) != null){
             result.rejectValue("userid", "Eqauls.userid", "아이디가 중복되었습니다.");
             return "views/manage/adminUser/adminUser-write";
         }
@@ -131,6 +129,12 @@ public class AdminMgController {
         return "views/manage/adminUser/adminUser-update";
     }
 
+    /**
+    * @methodName : adminUserUpdateForm
+    * @date : 2023-06-16 오후 11:56
+    * @author : 김재성
+    * @Description: 관리자 수정 submit
+    **/
     @PostMapping("/adminUser/update/{id}")
     public String adminUserUpdateForm(@Valid SaveAdminUser saveAdminUser, BindingResult result) {
         if (result.hasErrors()) {
@@ -155,7 +159,7 @@ public class AdminMgController {
      * @methodName : adminUserDelete
      * @date : 2023-05-15 오전 10:46
      * @author : 김재성
-     * @Description: 관리자 삭제
+     * @Description: 관리자 삭제 submit
      **/
     @PostMapping("/adminUser/delete")
     public String adminUserDelete(@RequestParam Long id) {
@@ -164,6 +168,12 @@ public class AdminMgController {
         return "redirect:/manage/adminUser/list";
     }
 
+    /**
+    * @methodName :
+    * @date : 2023-06-16 오후 11:55
+    * @author : 김재성
+    * @Description: 관리자 저장 dto
+    **/
     @Data
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     @PasswordMatches

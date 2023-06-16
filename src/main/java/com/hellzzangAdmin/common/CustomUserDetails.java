@@ -2,9 +2,15 @@ package com.hellzzangAdmin.common;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
 
+/**
+* @package : com.hellzzangAdmin.common
+* @name : CustomUserDetails.java
+* @date : 2023-06-16 오후 11:52
+* @author : 김재성
+* @Description: idx principal에 넣을려고 custom으로 만듬
+**/
 public class CustomUserDetails implements UserDetails {
 
     private String username;

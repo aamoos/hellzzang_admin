@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +16,7 @@ import java.io.IOException;
  * fileName       : LoginFailureHandler
  * author         : 김재성
  * date           : 2023-05-10
- * description    :
+ * description    : 로그인 실패 handler
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------

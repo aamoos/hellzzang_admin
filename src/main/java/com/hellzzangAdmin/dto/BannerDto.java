@@ -1,23 +1,18 @@
 package com.hellzzangAdmin.dto;
 
-import com.hellzzangAdmin.entity.FileInfo;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import java.time.LocalDateTime;
 
 /**
  * packageName    : com.hellzzangAdmin.dto
  * fileName       : BannerDto
  * author         : 김재성
  * date           : 2023-05-16
- * description    :
+ * description    : 배너 select Dto
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------

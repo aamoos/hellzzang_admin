@@ -22,7 +22,7 @@ import java.util.List;
  * fileName       : Banner
  * author         : 김재성
  * date           : 2023-05-16
- * description    :
+ * description    : 배너 entity
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------

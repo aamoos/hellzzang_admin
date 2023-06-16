@@ -161,6 +161,8 @@ public class GymWearService {
                     .fileInfo(fileInfo)
                     .gymWear(gymWear)
                     .build();
+
+            //짐웨어 파일첨부
             gymWear.addGymWearFile(gymWearFile);
             index++;
         }
@@ -173,13 +175,7 @@ public class GymWearService {
         List<GymWearFileDto> content = jpaQueryFactory
                 .select(new QGymWearFileDto(
                         gymWearFile.fileInfo.id
-                        ,gymWearFile.fileInfo.delYn
-                        ,gymWearFile.fileInfo.extension
-                        ,gymWearFile.fileInfo.originFileName
-                        ,gymWearFile.fileInfo.regDate
-                        ,gymWearFile.fileInfo.savedFileName
-                        ,gymWearFile.fileInfo.size
-                        ,gymWearFile.fileInfo.uploadDir
+                        ,gymWearFile.fileInfo
                 ))
                 .from(gymWearFile)
                 .where(gymWearFile.fileInfo.delYn.eq("N"))

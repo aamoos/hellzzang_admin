@@ -23,7 +23,7 @@ import static com.hellzzangAdmin.entity.QAdminUsers.adminUsers;
  * fileName       : AdminUserService
  * author         : 김재성
  * date           : 2023-05-12
- * description    : admin 사용자 서비스
+ * description    : admin 사용자 service
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
@@ -45,6 +45,8 @@ public class AdminUserService {
     public AdminUsers find(Long id){
         return adminUserRepository.findById(id).get();
     }
+
+
 
     /**
      * @methodName : save

@@ -17,7 +17,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
 import javax.sql.DataSource;
 
 /**
@@ -25,7 +24,7 @@ import javax.sql.DataSource;
  * fileName       : SecurityConfig
  * author         : 김재성
  * date           : 2023-05-10
- * description    :
+ * description    : security 설정파일
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------

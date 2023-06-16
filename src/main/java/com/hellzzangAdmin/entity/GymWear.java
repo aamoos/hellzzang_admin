@@ -19,7 +19,7 @@ import java.util.List;
  * fileName       : GymWear
  * author         : 김재성
  * date           : 2023-05-22
- * description    :
+ * description    : 짐웨어 entity
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------

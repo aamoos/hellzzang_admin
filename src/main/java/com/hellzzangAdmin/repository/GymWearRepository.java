@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * fileName       : GymWearRepository
  * author         : 김재성
  * date           : 2023-05-22
- * description    :
+ * description    : 짐웨어 repository
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------

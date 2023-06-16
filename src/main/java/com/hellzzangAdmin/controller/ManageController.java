@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -19,7 +18,7 @@ import java.util.List;
  * fileName       : ManageController
  * author         : 김재성
  * date           : 2023-05-11
- * description    : 관리controller
+ * description    : 관리 controller
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------

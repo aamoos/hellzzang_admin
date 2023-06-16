@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * fileName       : FileRepository
  * author         : 김재성
  * date           : 2023-05-11
- * description    :
+ * description    : 파일 repository
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------

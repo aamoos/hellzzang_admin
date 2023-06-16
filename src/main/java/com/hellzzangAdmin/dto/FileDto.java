@@ -1,17 +1,15 @@
 package com.hellzzangAdmin.dto;
 
 import com.hellzzangAdmin.entity.FileInfo;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * packageName    : com.hellzzangAdmin.dto
  * fileName       : FileDto
  * author         : 김재성
  * date           : 2023-05-11
- * description    :
+ * description    : 파일 dto
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------

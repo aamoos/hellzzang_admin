@@ -5,7 +5,7 @@ package com.hellzzangAdmin.authentication;
  * fileName       : CustomAuthenticationProvider
  * author         : 김재성
  * date           : 2023-05-10
- * description    :
+ * description    : 로그인 인증 provider
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
@@ -21,7 +21,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import javax.annotation.Resource;
 
 /**

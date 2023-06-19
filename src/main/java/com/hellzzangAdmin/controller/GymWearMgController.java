@@ -1,6 +1,7 @@
 package com.hellzzangAdmin.controller;
 
 import com.hellzzangAdmin.dto.GymWearDto;
+import com.hellzzangAdmin.dto.GymWearFileDto;
 import com.hellzzangAdmin.entity.GymWear;
 import com.hellzzangAdmin.repository.FileRepository;
 import com.hellzzangAdmin.service.GymWearService;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import javax.persistence.Column;
 import javax.persistence.Lob;
 import javax.servlet.http.HttpServletRequest;
@@ -113,9 +115,13 @@ public class GymWearMgController {
                 .price(gymWear.getPrice())
                 .build();
 
-        model.addAttribute("saveGymWear", saveGymWear);
+        //짐웨어 파일 리스트 조회
+        List<GymWearFileDto> gymWearFile = gymWearService.findGymWearFileList(id);
 
-//        //썸네일이 등록된경우에만 model
+        model.addAttribute("saveGymWear", saveGymWear);
+        model.addAttribute("gymWearFile", gymWearFile);
+
+        //썸네일이 등록된경우에만 model
         if(saveGymWear.thumbnailIdx != null){
             model.addAttribute("fileInfo", fileRepository.findById(saveGymWear.thumbnailIdx).get());
         }
@@ -182,14 +188,17 @@ public class GymWearMgController {
         @Min(value = 1, message = "가격은 0원 보다 크게 작성해야 합니다.")
         private Long price;     //가격
 
+        private List<String> options;
+
         @Builder
-        public SaveGymWear(Long id, String title, String contents, Long thumbnailIdx, List<Long> contentFileIdx, Long price){
+        public SaveGymWear(Long id, String title, String contents, Long thumbnailIdx, List<Long> contentFileIdx, Long price, List<String> options){
             this.id = id;
             this.title = title;
             this.contents = contents;
             this.thumbnailIdx = thumbnailIdx;
             this.contentFileIdx = contentFileIdx;
             this.price = price;
+            this.options = options;
         }
     }
 }

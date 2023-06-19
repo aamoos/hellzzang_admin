@@ -6,10 +6,7 @@ import com.hellzzangAdmin.dto.GymWearFileDto;
 import com.hellzzangAdmin.dto.QGymWearDto;
 import com.hellzzangAdmin.dto.QGymWearFileDto;
 import com.hellzzangAdmin.entity.*;
-import com.hellzzangAdmin.repository.AdminUserRepository;
-import com.hellzzangAdmin.repository.FileRepository;
-import com.hellzzangAdmin.repository.GymWearFileRepository;
-import com.hellzzangAdmin.repository.GymWearRepository;
+import com.hellzzangAdmin.repository.*;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +18,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.hellzzangAdmin.entity.QAdminUsers.adminUsers;
@@ -49,6 +47,7 @@ public class GymWearService {
     private final FileRepository fileRepository;
     private final GymWearFileRepository gymWearFileRepository;
     private final JPAQueryFactory jpaQueryFactory;
+    private final GymWearOptionRepository gymWearOptionRepository;
 
     /**
      * @methodName : find
@@ -144,6 +143,23 @@ public class GymWearService {
                 .price(saveGymWear.getPrice())
                 .build();
 
+        Long gymWearId = gymWearRepository.save(gymWear).getId();
+
+        List<String> options = saveGymWear.getOptions();
+
+        //gymWear 옵션값을 설정할경우 기존에꺼 삭제하고 insert 하는 로직
+        if(options.size() != 0){
+            gymWearOptionRepository.deleteByGymWearId(gymWearId);
+            List<GymWearOption> gymWearOptions = new ArrayList<>();
+
+            for (String option : options) {
+                gymWearOptions.add(new GymWearOption(option, gymWearId));
+            }
+
+            //saveAll을 사용하여 다중 insert
+            gymWearOptionRepository.saveAll(gymWearOptions);
+        }
+
         //기존에 등록된 파일 전부 삭제
         if(gymWear.getId() != null){
             gymWearFileRepository.deleteByGymWearId(saveGymWear.getId());
@@ -166,9 +182,6 @@ public class GymWearService {
             gymWear.addGymWearFile(gymWearFile);
             index++;
         }
-
-        //저장
-        gymWearRepository.save(gymWear);
     }
 
     public List<GymWearFileDto> findGymWearFileList(Long id){

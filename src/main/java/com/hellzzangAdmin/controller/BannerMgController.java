@@ -116,10 +116,8 @@ public class BannerMgController {
                 .bannerPath(banner.getBannerPath())
                 .build();
 
-        List<BannerFileDto> bannerFile = bannerService.findBannerFileList(id);
-
         model.addAttribute("saveBanner", saveBanner);
-        model.addAttribute("bannerFile", bannerFile);
+        model.addAttribute("bannerFile", banner.getBannerFiles());
 
         return "views/manage/banner/banner-update";
     }

@@ -30,7 +30,7 @@ public class BannerFile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "file_id")
     private FileInfo fileInfo;
 

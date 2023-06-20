@@ -54,7 +54,7 @@ public class FileInfo {
     private String delYn;               //삭제여부
 
     @Transient
-    private String url;        //썸네일 url
+    private String url;                 //썸네일 url
 
     @Builder
     public FileInfo(Long id, String originFileName, String savedFileName

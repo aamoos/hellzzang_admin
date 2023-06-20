@@ -3,6 +3,7 @@ package com.hellzzangAdmin.controller;
 import com.hellzzangAdmin.dto.GymWearDto;
 import com.hellzzangAdmin.dto.GymWearFileDto;
 import com.hellzzangAdmin.entity.GymWear;
+import com.hellzzangAdmin.entity.GymWearOption;
 import com.hellzzangAdmin.repository.FileRepository;
 import com.hellzzangAdmin.service.GymWearService;
 import lombok.*;
@@ -106,24 +107,15 @@ public class GymWearMgController {
 
         GymWear gymWear = gymWearService.find(id);
 
-        //짐웨어 조회
-        SaveGymWear saveGymWear = SaveGymWear.builder()
-                .id(gymWear.getId())
-                .title(gymWear.getTitle())
-                .contents(gymWear.getContents())
-                .thumbnailIdx(gymWear.getThumbnailIdx())
-                .price(gymWear.getPrice())
-                .build();
-
         //짐웨어 파일 리스트 조회
         List<GymWearFileDto> gymWearFile = gymWearService.findGymWearFileList(id);
 
-        model.addAttribute("saveGymWear", saveGymWear);
+        model.addAttribute("saveGymWear", gymWear);
         model.addAttribute("gymWearFile", gymWearFile);
 
         //썸네일이 등록된경우에만 model
-        if(saveGymWear.thumbnailIdx != null){
-            model.addAttribute("fileInfo", fileRepository.findById(saveGymWear.thumbnailIdx).get());
+        if(gymWear.getThumbnailIdx() != null){
+            model.addAttribute("fileInfo", fileRepository.findById(gymWear.getThumbnailIdx()).get());
         }
 
         return "views/manage/gymWear/gymWear-update";
@@ -190,8 +182,10 @@ public class GymWearMgController {
 
         private List<String> options;
 
+        private String optionYn;
+
         @Builder
-        public SaveGymWear(Long id, String title, String contents, Long thumbnailIdx, List<Long> contentFileIdx, Long price, List<String> options){
+        public SaveGymWear(Long id, String title, String contents, Long thumbnailIdx, List<Long> contentFileIdx, Long price, List<String> options, String optionYn){
             this.id = id;
             this.title = title;
             this.contents = contents;
@@ -199,6 +193,7 @@ public class GymWearMgController {
             this.contentFileIdx = contentFileIdx;
             this.price = price;
             this.options = options;
+            this.optionYn = optionYn;
         }
     }
 }

@@ -28,6 +28,8 @@
                                 <input type="hidden" id="id" name="id" th:value="${saveGymWear.id}"/>
                                 <input type="hidden" id="thumbnailIdx" name="thumbnailIdx" th:value="*{thumbnailIdx}"/>
                                 <input type="hidden" id="contentFileIdx" name="contentFileIdx" />
+                                <input type="hidden" id="options" name="options" />
+                                <input type="hidden" id="optionYn" name="optionYn" th:value="*{optionYn}" />
                                 <div class="mb-3">
                                     <label for="title" class="form-label">제목</label>
                                     <input type="text" class="form-control" id="title" th:field="*{title}" th:value="${saveGymWear.title}" aria-describedby="emailHelp">
@@ -45,6 +47,26 @@
                                     <label for="title" class="form-label">가격</label>
                                     <input type="text" class="form-control" id="price" th:field="*{price}" th:value="${saveGymWear.price}" aria-describedby="emailHelp">
                                     <small id="valid_price" class="form-text text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></small>
+                                </div>
+
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <input onclick="optionClick()" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" th:checked="${saveGymWear.optionYn == 'Y'}">
+                                        <label class="form-check-label" for="flexSwitchCheckDefault">옵션 사용유무</label>
+                                    </div>
+                                </div>
+
+                                <div id="optionDiv" th:style="${saveGymWear.optionYn == 'N' ? 'display:none;' : ''}">
+                                    <div id="optionList">
+                                        <div class="mb-3" th:each="list : ${saveGymWear.gymWearOptions}">
+                                            <input type="text" class="form-control options" th:value="${list.optionName}">
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <button onclick="optionAdd()" type="button" class="btn btn-primary">옵션추가</button>
+                                        <button onclick="optionRemove()" type="button" class="btn btn-danger">옵션삭제</button>
+                                    </div>
                                 </div>
 
                                 <div class="mb-3">
@@ -200,8 +222,26 @@
 
                         document.querySelector('#contentFileIdx').value = contentFileIdx;
 
+                        const checkbox = document.querySelector('#flexSwitchCheckDefault:checked');
+
+                        //체크박스가 체크되어있는경우
+                        if(checkbox){
+                            //옵션값넣기
+                            let optionsValue = [];
+
+                            $(".options").each(function(){
+                                let value = $(this).val();
+                                optionsValue.push(value);
+                            });
+                            document.querySelector('#options').value = optionsValue;
+                        }else{
+                            //체크박스가 체크 안됨
+                            document.querySelector('#options').value = "";
+                        }
+
                         //짐웨어 저장
                         document.querySelector('#gymWearForm').submit();
+
                       },
                       error: function (xhr, status, error) {
                         alert("서버오류로 지연되고있습니다. 잠시 후 다시 시도해주시기 바랍니다.");
@@ -318,10 +358,53 @@
             });
         }
 
-      //드랍존 detail 삭제 버튼클릭시 삭제
+        //드랍존 detail 삭제 버튼클릭시 삭제
         function deleteBtn(target){
             console.log($(target).parents("li"));
             $(target).parents("li").remove();
+        }
+
+        //옵션 사용유무 클릭
+        function optionClick(){
+            const checkbox = document.querySelector('#flexSwitchCheckDefault:checked');
+
+            if(checkbox){
+                document.querySelector('#optionDiv').style.display = 'block';
+                document.querySelector('#optionYn').value = 'Y';
+            }else{
+                document.querySelector('#optionDiv').style.display = 'none';
+                document.querySelector('#optionYn').value = 'N';
+            }
+        }
+
+        //옵션 추가
+        function optionAdd(){
+            //document.querySelector('#optionList').appendChild("<div class="mb-3"><input type="text" class="form-control"></div>");
+
+            let newElement = document.createElement('div');
+            newElement.className = 'mb-3';
+
+            let inputElement = document.createElement('input');
+            inputElement.type = 'text';
+            inputElement.className = 'form-control options';
+
+            newElement.appendChild(inputElement);
+
+            document.querySelector('#optionList').appendChild(newElement);
+        }
+
+        //옵션 제거
+        function optionRemove(){
+            const rows = document.querySelectorAll('#optionList .mb-3');
+
+            if(rows.length == 1){
+                alert("옵션은 한개이상 있어야 합니다.");
+                return false;
+            }else{
+                // 마지막 행을 제거합니다.
+                var lastRow = rows[rows.length - 1];
+                lastRow.parentNode.removeChild(lastRow);
+            }
         }
     </script>
 </th:block>

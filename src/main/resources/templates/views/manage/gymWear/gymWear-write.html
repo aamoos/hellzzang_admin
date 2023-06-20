@@ -28,6 +28,7 @@
                                 <input type="hidden" id="thumbnailIdx" name="thumbnailIdx" />
                                 <input type="hidden" id="contentFileIdx" name="contentFileIdx" />
                                 <input type="hidden" id="options" name="options" />
+                                <input type="hidden" id="optionYn" name="optionYn" value="N" />
                                 <div class="mb-3">
                                     <label for="title" class="form-label">제목</label>
                                     <input type="text" class="form-control" id="title" th:field="*{title}" aria-describedby="emailHelp">
@@ -336,8 +337,10 @@
 
             if(checkbox){
                 document.querySelector('#optionDiv').style.display = 'block';
+                document.querySelector('#optionYn').value = 'Y';
             }else{
                 document.querySelector('#optionDiv').style.display = 'none';
+                document.querySelector('#optionYn').value = 'N';
             }
         }
 

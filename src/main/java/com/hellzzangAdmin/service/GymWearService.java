@@ -14,15 +14,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-
 import static com.hellzzangAdmin.entity.QAdminUsers.adminUsers;
-import static com.hellzzangAdmin.entity.QBanner.banner;
 import static com.hellzzangAdmin.entity.QGymWear.gymWear;
 import static com.hellzzangAdmin.entity.QGymWearFile.gymWearFile;
 
@@ -93,10 +90,11 @@ public class GymWearService {
                         gymWear.modifiedDate,
                         gymWear.thumbnailIdx,
                         gymWear.delYn,
-                        gymWear.price
+                        gymWear.price,
+                        gymWear.optionYn
                 ))
                 .from(gymWear)
-                .innerJoin(adminUsers).on(adminUsers.id.eq(gymWear.adminUsers.id))
+//                .innerJoin(adminUsers).on(adminUsers.id.eq(gymWear.adminUsers.id))
                 .where(gymWear.delYn.eq("N"))
                 .where(containsSearch(searchVal))
                 .orderBy(gymWear.id.desc())
@@ -118,7 +116,7 @@ public class GymWearService {
         Long count = jpaQueryFactory
                 .select(gymWear.count())
                 .from(gymWear)
-                .innerJoin(adminUsers).on(adminUsers.id.eq(gymWear.adminUsers.id))
+//                .innerJoin(adminUsers).on(adminUsers.id.eq(gymWear.adminUsers.id))
                 .where(adminUsers.id.eq(gymWear.adminUsers.id))
                 .where(gymWear.delYn.eq("N"))
                 .where(containsSearch(searchVal))
@@ -141,23 +139,25 @@ public class GymWearService {
                 .adminUsers(adminUsers)
                 .thumbnailIdx(saveGymWear.getThumbnailIdx())
                 .price(saveGymWear.getPrice())
+                .optionYn(saveGymWear.getOptionYn())
                 .build();
 
-        Long gymWearId = gymWearRepository.save(gymWear).getId();
+        gymWearRepository.save(gymWear);
 
-        List<String> options = saveGymWear.getOptions();
+        //option list 뽑기
+        List<String> optionList = saveGymWear.getOptions();
 
-        //gymWear 옵션값을 설정할경우 기존에꺼 삭제하고 insert 하는 로직
-        if(options.size() != 0){
-            gymWearOptionRepository.deleteByGymWearId(gymWearId);
-            List<GymWearOption> gymWearOptions = new ArrayList<>();
+        if(saveGymWear.getId() != null){
+            gymWearOptionRepository.deleteByGymWearId(saveGymWear.getId());
+        }
 
-            for (String option : options) {
-                gymWearOptions.add(new GymWearOption(option, gymWearId));
-            }
-
-            //saveAll을 사용하여 다중 insert
-            gymWearOptionRepository.saveAll(gymWearOptions);
+        //gymWear option 넣기
+        for(String s : optionList){
+            GymWearOption gymWearOption = GymWearOption.builder()
+                    .optionName(s)
+                    .gymWear(gymWear)
+                    .build();
+            gymWearOptionRepository.save(gymWearOption);
         }
 
         //기존에 등록된 파일 전부 삭제

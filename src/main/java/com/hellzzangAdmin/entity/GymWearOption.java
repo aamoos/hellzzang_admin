@@ -1,11 +1,12 @@
 package com.hellzzangAdmin.entity;
 
+import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Optional;
 
 /**
@@ -21,6 +22,8 @@ import java.util.Optional;
  */
 
 @Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class GymWearOption {
 
     @Id
@@ -29,10 +32,14 @@ public class GymWearOption {
 
     private String optionName;
 
-    private Long gymWearId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "gymWear_id")
+    private GymWear gymWear;
 
-    public GymWearOption(String option, Long gymWearId) {
-        this.optionName = option;
-        this.gymWearId = gymWearId;
+    @Builder
+    public GymWearOption(Long id, String optionName, GymWear gymWear) {
+        this.id = id;
+        this.optionName = optionName;
+        this.gymWear = gymWear;
     }
 }

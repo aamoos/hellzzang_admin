@@ -1,8 +1,11 @@
 package com.hellzzangAdmin.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -24,6 +27,7 @@ import java.util.List;
 @Setter
 @Entity
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Comment {
 
     @Id
@@ -32,6 +36,7 @@ public class Comment {
 
     private String content;
 
+    @CreatedDate
     private LocalDateTime commentDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -39,7 +44,13 @@ public class Comment {
     private Post post;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_index")
+    @JsonIgnore
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
+    @JsonIgnore
     private Comment parentComment;
 
     @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL, orphanRemoval = true)

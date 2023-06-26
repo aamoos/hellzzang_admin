@@ -4,9 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * packageName    : com.hellzzang.entity
@@ -23,6 +26,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Post {
 
     @Id
@@ -35,7 +39,11 @@ public class Post {
 
     private int likes;
 
+    @CreatedDate
     private LocalDateTime postDate;
+
+    @OneToMany(mappedBy = "post")
+    private List<Comment> comments;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_index")

@@ -161,27 +161,27 @@ public class GymWearService {
         }
 
         //기존에 등록된 파일 전부 삭제
-        if(gymWear.getId() != null){
-            gymWearFileRepository.deleteByGymWearId(saveGymWear.getId());
-        }
-
-        //banner_file 테이블 저장
-        List<Long> fileIdxList = saveGymWear.getContentFileIdx();
-
-        int index = 0;
-
-        for (Long id : fileIdxList) {
-            FileInfo fileInfo = fileRepository.findById(fileIdxList.get(index)).get();
-
-            GymWearFile gymWearFile = GymWearFile.builder()
-                    .fileInfo(fileInfo)
-                    .gymWear(gymWear)
-                    .build();
-
-            //짐웨어 파일첨부
-            gymWear.addGymWearFile(gymWearFile);
-            index++;
-        }
+//        if(gymWear.getId() != null){
+//            gymWearFileRepository.deleteByGymWearId(saveGymWear.getId());
+//        }
+//
+//        //banner_file 테이블 저장
+//        List<Long> fileIdxList = saveGymWear.getContentFileIdx();
+//
+//        int index = 0;
+//
+//        for (Long id : fileIdxList) {
+//            FileInfo fileInfo = fileRepository.findById(fileIdxList.get(index)).get();
+//
+//            GymWearFile gymWearFile = GymWearFile.builder()
+//                    .fileInfo(fileInfo)
+//                    .gymWear(gymWear)
+//                    .build();
+//
+//            //짐웨어 파일첨부
+//            gymWear.addGymWearFile(gymWearFile);
+//            index++;
+//        }
     }
 
     public List<GymWearFileDto> findGymWearFileList(Long id){

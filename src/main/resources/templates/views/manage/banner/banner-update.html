@@ -149,7 +149,7 @@
             console.log(myDropzone.files);
 
             const dropZoneFiles = myDropzone.files;
-            var formData = new FormData();
+            const formData = new FormData();
 
              for(let i=0; i<dropZoneFiles.length; i++){
                 formData.append('article_file', dropZoneFiles[i]); // attach dropzone image element
@@ -196,8 +196,8 @@
          // 중복된 파일의 제거
          if (this.files.length) {
             // -1 to exclude current file
-            var hasFile = false;
-            for (var i = 0; i < this.files.length - 1; i++) {
+            let hasFile = false;
+            for (let i = 0; i < this.files.length - 1; i++) {
                if (
                   this.files[i].name === file.name &&
                   this.files[i].size === file.size &&

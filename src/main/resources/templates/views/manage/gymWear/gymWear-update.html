@@ -27,7 +27,7 @@
                             <form id="gymWearForm" th:action="@{/manage/gymWear/update/{id}(id=${saveGymWear.id})}" th:object="${saveGymWear}" method="post">
                                 <input type="hidden" id="id" name="id" th:value="${saveGymWear.id}"/>
                                 <input type="hidden" id="thumbnailIdx" name="thumbnailIdx" th:value="*{thumbnailIdx}"/>
-                                <input type="hidden" id="contentFileIdx" name="contentFileIdx" />
+<!--                                <input type="hidden" id="contentFileIdx" name="contentFileIdx" />-->
                                 <input type="hidden" id="options" name="options" />
                                 <input type="hidden" id="optionYn" name="optionYn" th:value="*{optionYn}" />
                                 <div class="mb-3">
@@ -136,11 +136,11 @@
     </div>
     <script>
 
-     Dropzone.autoDiscover = false;
+        Dropzone.autoDiscover = false;
 
-        var dropzonePreviewNode = document.querySelector('#dropzone-preview-list'); // <li class="mt-2" id="dropzone-preview-list"> 부분을 가져와서
+        const dropzonePreviewNode = document.querySelector('#dropzone-preview-list'); // <li class="mt-2" id="dropzone-preview-list"> 부분을 가져와서
         dropzonePreviewNode.id = ''; // 중복 회피를 위해 id 없애고
-        var previewTemplate = dropzonePreviewNode.parentNode.innerHTML; // 엘리먼트 전체를 저장 (템플릿)
+        const previewTemplate = dropzonePreviewNode.parentNode.innerHTML; // 엘리먼트 전체를 저장 (템플릿)
         dropzonePreviewNode.parentNode.removeChild(dropzonePreviewNode); // 그리고 삭제
 
         let addedFiles = [];
@@ -192,7 +192,7 @@
                 console.log(myDropzone.files);
 
                 const dropZoneFiles = myDropzone.files;
-                var formData = new FormData();
+                const formData = new FormData();
 
                  for(let i=0; i<dropZoneFiles.length; i++){
                     formData.append('article_file', dropZoneFiles[i]); // attach dropzone image element
@@ -207,20 +207,20 @@
                       contentType: false,
                       success: function (data) {
 
-                        let contentFileIdx = [];
+                        // let contentFileIdx = [];
 
                         //썸네일 등록할경우에만 설정
                         if(data.length != 0){
                             document.querySelector('#thumbnailIdx').value = data[0].id;
                         }
 
-                        $(".note-editable").find("img").each(function(){
-                            let src = $(this).attr("src");
-                            let fIdx = src.split("/")[2];
-                            contentFileIdx.push(Number(fIdx));
-                        });
+                        // $(".note-editable").find("img").each(function(){
+                        //     let src = $(this).attr("src");
+                        //     let fIdx = src.split("/")[2];
+                        //     contentFileIdx.push(Number(fIdx));
+                        // });
 
-                        document.querySelector('#contentFileIdx').value = contentFileIdx;
+                        // document.querySelector('#contentFileIdx').value = contentFileIdx;
 
                         const checkbox = document.querySelector('#flexSwitchCheckDefault:checked');
 
@@ -254,8 +254,8 @@
              // 중복된 파일의 제거
              if (this.files.length) {
                 // -1 to exclude current file
-                var hasFile = false;
-                for (var i = 0; i < this.files.length - 1; i++) {
+                let hasFile = false;
+                for (let i = 0; i < this.files.length - 1; i++) {
                    if (
                       this.files[i].name === file.name &&
                       this.files[i].size === file.size &&
@@ -292,7 +292,7 @@
 
 
         $(function(){
-            var maxSize=20 * 1024 * 1024;
+            const maxSize= 20 * 1024 * 1024;
 
             //텍스트 에디터
             $("#summernote").summernote({
@@ -305,7 +305,7 @@
                 callbacks: {
                     onImageUpload : function(files){
                         // 파일 업로드(다중업로드를 위해 반복문 사용)
-                        for (var i = files.length - 1; i >= 0; i--) {
+                        for (let i = files.length - 1; i >= 0; i--) {
                             if(files[i].size > maxSize){
                                 alert("첨부파일 사이즈는 20MB 이내로 등록 가능합니다.");
                                 break;
@@ -333,7 +333,7 @@
 
         //summernote content 파일 업로드
         function sendFile(file, editor){
-            var data = new FormData();
+            const data = new FormData();
             data.append("file", file);
             console.log(file);
             $.ajax({
@@ -350,7 +350,7 @@
                      console.log(data);
                     console.log(editor);
                     data.url = data.url;
-                    var image = $('<img>').attr('src',  data.url);
+                    const image = $('<img>').attr('src',  data.url);
                     image.attr('width','350px');
 
                      $('#summernote').summernote("insertNode", image[0]);
@@ -402,7 +402,7 @@
                 return false;
             }else{
                 // 마지막 행을 제거합니다.
-                var lastRow = rows[rows.length - 1];
+                const lastRow = rows[rows.length - 1];
                 lastRow.parentNode.removeChild(lastRow);
             }
         }

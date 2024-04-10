@@ -4,6 +4,7 @@
 - Spring Boot
 - Gradle
 - JPA
+- Querydsl
 - H2
 - Thymeleaf
 - InteliJ
